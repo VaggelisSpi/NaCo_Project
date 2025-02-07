@@ -21,6 +21,7 @@ body{
 let config = {
     ndim : 2,
     field_size : [100,100],
+	// first cell is the movable object, second is the obstacle
     conf : {
 		// Basic CPM parameters
 		torus : [true,true],						// Should the grid have linked borders?
@@ -33,18 +34,22 @@ let config = {
 		// First value is always cellkind 0 (the background) and is often not used.
 
 		// Adhesion parameters:
-		J: [[20,0,20], 
-			[20,0,0], 
-			[100,0,0]],
+		J: [[0,0,20], 
+			[0,0,50],
+			[20,50,0]],
 		
 		// VolumeConstraint parameters
 		LAMBDA_V : [0,50,50],					// VolumeConstraint importance per cellkind
 		V : [0,200,100],						// Target volume of each cellkind
 		
 		LAMBDA_P : [0,2,0],
-		P : [0,180,0]
-		// move max act 80, adh cell-mat 20, adh cell-cell 0
-		// obj max act 0, adh cell-mat 100, adh cell-cell 0
+		P : [0,180,0],
+
+		// ActivityConstraint parameters
+		LAMBDA_ACT : [0,200,0],				// ActivityConstraint importance per cellkind
+		MAX_ACT : [0,80,0],		// Activity memory duration per cellkind
+		ACT_MEAN : "geometric"				// Is neighborhood activity computed as a
+		// "geometric" or "arithmetic" mean?
 		
 	},
 	
@@ -52,7 +57,7 @@ let config = {
 	simsettings : {
 	
 		// Cells on the grid
-		NRCELLS : [3,1],					// Number of cells to seed for all
+		NRCELLS : [5,1],					// Number of cells to seed for all
 		// non-background cellkinds.
 		// Runtime etc
 		BURNIN : 0,
@@ -62,7 +67,7 @@ let config = {
 		// Visualization
 		CANVASCOLOR : "eaecef",
 		CELLCOLOR : ["0000FF","2D2E33"],
-		ACTCOLOR : [false,false],					// Should pixel activity values be displayed?
+		ACTCOLOR : [true,false],					// Should pixel activity values be displayed?
 		SHOWBORDERS : [true,true],				// Should cellborders be displayed?
 		zoom : 4,							// zoom in on canvas with this factor.
 		
