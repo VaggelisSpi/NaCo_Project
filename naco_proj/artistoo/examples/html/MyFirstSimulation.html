@@ -1,0 +1,104 @@
+<!-- Page setup and title -->
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html;
+charset=UTF-8">
+<title>Test</title>
+<style type="text/css"> 
+body{
+    font-family: "HelveticaNeue-Light", sans-serif; padding : 15px;
+}
+</style>
+
+<!-- Sourcing the cpm build -->
+<!-- <script src="../../build/artistoo.js"></script> -->
+<script src="./artistoo.js"></script>
+<script src="./fpsmeter.min.js"></script>
+
+<script>
+"use strict"
+
+let config = {
+    ndim : 2,
+    field_size : [100,100],
+    conf : {
+		// Basic CPM parameters
+		torus : [true,true],						// Should the grid have linked borders?
+		seed : 1,							// Seed for random number generation.
+		T : 20,								// CPM temperature
+		
+		// Constraint parameters. 
+		// Mostly these have the format of an array in which each element specifies the
+		// parameter value for one of the cellkinds on the grid.
+		// First value is always cellkind 0 (the background) and is often not used.
+
+		// Adhesion parameters:
+		J: [[0,20,20], 
+			[20,20,20], 
+			[20,60,20]],
+		
+		// VolumeConstraint parameters
+		LAMBDA_V : [0,50,50],					// VolumeConstraint importance per cellkind
+		V : [0,500,500],						// Target volume of each cellkind
+		
+		LAMBDA_P : [0,2,2],
+		P : [0,280,340]
+		
+		
+	},
+	
+	// Simulation setup and configuration
+	simsettings : {
+	
+		// Cells on the grid
+		NRCELLS : [3,1],					// Number of cells to seed for all
+		// non-background cellkinds.
+		// Runtime etc
+		BURNIN : 0,
+		RUNTIME : 1000,
+		RUNTIME_BROWSER : "Inf",
+		
+		// Visualization
+		CANVASCOLOR : "eaecef",
+		CELLCOLOR : ["0000FF","2D2E33"],
+		ACTCOLOR : [false,false],					// Should pixel activity values be displayed?
+		SHOWBORDERS : [true,true],				// Should cellborders be displayed?
+		zoom : 4,							// zoom in on canvas with this factor.
+		
+		// Output images
+		SAVEIMG : true,						// Should a png image of the grid be saved
+		// during the simulation?
+		IMGFRAMERATE : 1,					// If so, do this every <IMGFRAMERATE> MCS.
+		SAVEPATH : "output/img/ManyCellsPrefDir",// ... And save the image in this folder.
+		EXPNAME : "ManyCellsPrefDir",			// Used for the filename of output images.
+		
+		// Output stats etc
+		STATSOUT : { browser: false, node: true }, // Should stats be computed?
+		LOGRATE : 10							// Output stats every <LOGRATE> MCS.
+
+	}
+}
+
+let sim
+
+function initialize(){
+    sim = new CPM.Simulation( config, {} )
+    step()
+}
+
+function step(){
+    sim.step()
+    requestAnimationFrame( step )
+}
+
+
+</script>
+</head>
+<body onload="initialize()">
+<h1>My experiment</h1>
+
+<p>
+It does not work.
+</p>
+</body>
+</html>
