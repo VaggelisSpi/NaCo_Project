@@ -24,7 +24,7 @@ let config = {
     conf : {
 		// Basic CPM parameters
 		torus : [true,true],						// Should the grid have linked borders?
-		seed : 1,							// Seed for random number generation.
+		seed : 5,							// Seed for random number generation.
 		T : 20,								// CPM temperature
 		
 		// Constraint parameters. 
@@ -33,17 +33,18 @@ let config = {
 		// First value is always cellkind 0 (the background) and is often not used.
 
 		// Adhesion parameters:
-		J: [[0,20,20], 
-			[20,20,20], 
-			[20,60,20]],
+		J: [[20,0,20], 
+			[20,0,0], 
+			[100,0,0]],
 		
 		// VolumeConstraint parameters
 		LAMBDA_V : [0,50,50],					// VolumeConstraint importance per cellkind
-		V : [0,500,500],						// Target volume of each cellkind
+		V : [0,200,100],						// Target volume of each cellkind
 		
-		LAMBDA_P : [0,2,2],
-		P : [0,280,340]
-		
+		LAMBDA_P : [0,2,0],
+		P : [0,180,0]
+		// move max act 80, adh cell-mat 20, adh cell-cell 0
+		// obj max act 0, adh cell-mat 100, adh cell-cell 0
 		
 	},
 	
