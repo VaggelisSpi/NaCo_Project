@@ -6,15 +6,7 @@ charset=UTF-8">
 <title>Test</title>
 <style type="text/css"> 
 body{
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
-		 Helvetica, Arial, "Lucida Grande", sans-serif;
-	 padding : 15px;
-	 max-width: 600px;
-	 margin: auto;
-}
-td {
-	 padding: 10px;
-	 vertical-align: top;
+    font-family: "HelveticaNeue-Light", sans-serif; padding : 15px;
 }
 </style>
 
@@ -28,7 +20,7 @@ td {
 
 let config = {
     ndim : 2,
-    field_size : [200,200],
+    field_size : [100,100],
 	// first cell is the movable object, second is the obstacle
     conf : {
 		// Basic CPM parameters
@@ -48,9 +40,9 @@ let config = {
 		// blue circles 		J: [[0,400,20], 
 		// 	[400,0,50],
 		// 	[20,50,0]],
-		J: [[0,10,30], 
-			[10,0,50],
-			[30,50,0]],
+		J: [[0,0,20], 
+			[0,0,50],
+			[20,50,0]],
 		
 		// VolumeConstraint parameters
 		LAMBDA_V : [0,50,50],					// VolumeConstraint importance per cellkind
@@ -71,10 +63,10 @@ let config = {
 	simsettings : {
 	
 		// Cells on the grid
-		NRCELLS : [20,5],					// Number of cells to seed for all
+		NRCELLS : [5,1],					// Number of cells to seed for all
 		// non-background cellkinds.
 		// Runtime etc
-		BURNIN : 500,
+		BURNIN : 0,
 		RUNTIME : 1000,
 		RUNTIME_BROWSER : "Inf",
 		
@@ -83,10 +75,10 @@ let config = {
 		CELLCOLOR : ["0000FF","000000"],
 		ACTCOLOR : [true,false],					// Should pixel activity values be displayed?
 		SHOWBORDERS : [true,true],				// Should cellborders be displayed?
-		zoom : 2,							// zoom in on canvas with this factor.
+		zoom : 4,							// zoom in on canvas with this factor.
 		
 		// Output images
-		SAVEIMG : false,						// Should a png image of the grid be saved
+		SAVEIMG : true,						// Should a png image of the grid be saved
 		// during the simulation?
 		IMGFRAMERATE : 1,					// If so, do this every <IMGFRAMERATE> MCS.
 		SAVEPATH : "output/img/ManyCellsPrefDir",// ... And save the image in this folder.
@@ -99,26 +91,26 @@ let config = {
 	}
 }
 
-let sim, meter
+let sim
 
 function initialize(){
     sim = new CPM.Simulation( config, {} )
-	meter = new FPSMeter({left:"auto", right:"5px"})
     step()
 }
 
 function step(){
     sim.step()
-	meter.tick()
     requestAnimationFrame( step )
 }
 
 
 </script>
 </head>
-
 <body onload="initialize()">
-	<h1>My experiment</h1>
-	<p>It does not work.</p>
+<h1>My experiment</h1>
+
+<p>
+It does not work.
+</p>
 </body>
 </html>
