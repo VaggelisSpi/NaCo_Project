@@ -28,7 +28,7 @@ td {
 
 let obstacle_grid = [10, 10]
 let num_obstacles = obstacle_grid[0]*obstacle_grid[2]
-let num_cells = 10
+let num_cells = 1
 
 let sim, meter
 
@@ -48,12 +48,9 @@ let config = {
 		// First value is always cellkind 0 (the background) and is often not used.
 
 		// Adhesion parameters:
-		// [[J_blue_blue, J_blue_black, J_b;ue_mat],
-		//  [J_black_blue, J_blak_black, J_black_mat],
-		//  [J_blue_mat, J_blak_mat, J_mat_mat],]
-		// blue circles 		J: [[0,400,20], 
-		// 	[400,0,50],
-		// 	[20,50,0]],
+		// [[J_cell_cell, J_cell_obstacle, J_cell_mat],
+		//  [J_obstacle_cell, J_obstacle_obstacle, J_obstacle_mat],
+		//  [J_cell_mat, J_obstacle_mat, J_mat_mat]]
 		J: [[0,10,30], 
 			[10,0,50],
 			[30,50,0]],
@@ -106,9 +103,9 @@ let config = {
 }
 
 function initialize(){
-		 /* 	The following functions are defined below and will be added to
-	 	the simulation object. If Custom-methods above is set to false,
-	 	this object is ignored and not used in the html/node files. */
+	/* The following functions are defined below and will be added to
+	the simulation object. If Custom-methods above is set to false,
+	this object is ignored and not used in the html/node files. */
 	let custommethods = {
 		initializeGrid : initializeGrid,
 	}
