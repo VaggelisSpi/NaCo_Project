@@ -26,7 +26,11 @@ td {
 <script>
 "use strict"
 
-let num_obstacles = 50, num_cells = 10, sim, meter
+let obstacle_grid = [10, 10]
+let num_obstacles = obstacle_grid[0]*obstacle_grid[2]
+let num_cells = 10
+
+let sim, meter
 
 let config = {
     ndim : 2,
@@ -131,39 +135,18 @@ function initializeGrid(){
 	}
 
 	// Seed obstacles in equal spacing in the grid
-	let x_size = this.C.extents[0]
-	let y_size = this.C.extents[1]
-
-
-	// Calculate how many rows we need to accommodate x points
-    const rows = Math.ceil(Math.sqrt(num_obstacles));
-
-    // Calculate the spacing between rows
-    const row_spacing = x_size / (rows + 1); // +1 to account for edges
-
-	let points = []
-    let obstacles_placed = 0;
-    for (let i = 0; i < rows; i++) {
-        // Calculate how many points to place in this row
-        const obstacles_in_row = Math.min(num_obstacles - obstacles_placed, rows);
-
-        // Calculate the spacing between points in this row
-        const col_spacing = x_size / (obstacles_in_row + 1); // +1 to account for edges
-
-        for (let j = 0; j < obstacles_in_row; j++) {
-            const point = {
-                x: (j + 1) * col_spacing,
-                y: (i + 1) * row_spacing
-            };
-            points.push(point);
-            obstacles_placed++;
-        }
-
-        if (obstacles_placed >= num_obstacles) break; // Stop once we've reached the desired number of points
-    }
-
-	for( let p of points ){
-		this.gm.seedCellAt( 2, [Math.floor(p.x),Math.floor(p.y)] )
+	let width = this.C.extents[0]
+	let height = this.C.extents[1]
+	let x_spacing = width / obstacle_grid[0]
+	let y_spacing = height / obstacle_grid[1]
+	for (let i = 0; i < obstacle_grid[0]; i++) {
+		for (let j = 0; j < obstacle_grid[1]; j++) {
+			const point = {
+				x: (i + 0.5) * x_spacing,
+				y: (j + 0.5) * y_spacing
+			};
+			this.gm.seedCellAt( 2, [Math.round(point.x), Math.round(point.y)] )
+		}
 	}
 }
 
