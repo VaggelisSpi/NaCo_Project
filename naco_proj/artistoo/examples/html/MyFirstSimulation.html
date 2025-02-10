@@ -26,8 +26,9 @@ td {
 <script>
 "use strict"
 
-let obstacle_grid = [10, 10]
+let obstacle_grid = [8, 8]
 let num_obstacles = obstacle_grid[0]*obstacle_grid[2]
+let num_cells = 150
 let num_cells = 1
 
 let sim, meter
@@ -57,7 +58,7 @@ let config = {
 		
 		// VolumeConstraint parameters
 		LAMBDA_V : [0,50,5],					// VolumeConstraint importance per cellkind
-		V : [0,200,100],						// Target volume of each cellkind
+		V : [0,200,150],						// Target volume of each cellkind
 		
 		LAMBDA_P : [0,2,2],
 		P : [0,180,2],
@@ -126,9 +127,19 @@ function initializeGrid(){
 	// add the initializer if not already there
 	if( !this.helpClasses["gm"] ){ this.addGridManipulator() }
 
-	// Seed the moving cells
-	for (var i =0; i < num_cells; i+=1) {
-		this.gm.seedCell( 1, 5 )
+	let occupiedPoints = new Set()
+
+	// Function to add surrounding points to the occupied set
+	function markOccupied(x, y, radius, width, height) {
+		for (let dx = -radius; dx <= radius; dx++) {
+			for (let dy = -radius; dy <= radius; dy++) {
+				let nx = x + dx
+				let ny = y + dy
+				if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+					occupiedPoints.add(`${nx},${ny}`)
+				}
+			}
+		}
 	}
 
 	// Seed obstacles in equal spacing in the grid
@@ -138,12 +149,23 @@ function initializeGrid(){
 	let y_spacing = height / obstacle_grid[1]
 	for (let i = 0; i < obstacle_grid[0]; i++) {
 		for (let j = 0; j < obstacle_grid[1]; j++) {
-			const point = {
-				x: (i + 0.5) * x_spacing,
-				y: (j + 0.5) * y_spacing
-			};
-			this.gm.seedCellAt( 2, [Math.round(point.x), Math.round(point.y)] )
+			const x = Math.floor((i + 0.5) * x_spacing)
+        	const y = Math.floor((j + 0.5) * y_spacing)
+			this.gm.seedCellAt( 2, [x, y] )
+			markOccupied(x, y, 11, width, height)
 		}
+	}
+
+	// Seed moving cells
+	for (let k = 0; k < num_cells; k++) {
+		let x, y, key
+		do {
+			x = Math.floor(Math.random() * width)
+			y = Math.floor(Math.random() * height)
+			key = `${x},${y}`
+		} while (occupiedPoints.has(key))
+		this.gm.seedCellAt(1, [x, y])
+		markOccupied(x, y, 3, width, height)
 	}
 }
 
