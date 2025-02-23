@@ -49,6 +49,7 @@ i = 0
 for language in languages:
     print(language)
     data = pd.DataFrame()
+    data['input'] = pd.read_csv(directory + 'english_' + language + '.test', header=None)  # input sentence
     data['score'] = pd.read_csv(directory + language + '_res.txt', header=None).astype(np.float32)  # anomaly score
     data['anomalous'] = 1
     data.loc[:123, 'anomalous'] = 0
