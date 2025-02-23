@@ -19,8 +19,8 @@ def preprocess_data(data):
 
 
 def caclulate_roc_auc(data):
-    fpr, tpr, thresholds = metrics.roc_curve(data['anomalous'], data['y'])
-    auc = metrics.roc_auc_score(data['anomalous'], data['y'])
+    fpr, tpr, thresholds = metrics.roc_curve(data['anomalous'], data['score'])
+    auc = metrics.roc_auc_score(data['anomalous'], data['score'])
     roc = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=auc)
 
     return auc, roc
