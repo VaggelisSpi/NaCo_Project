@@ -192,6 +192,14 @@ for r in range(1, 8):
         "./data/syscalls/snd-unm/snd_unm_1_substr_res_" + str(r) + ".txt")
     subprocess.run(cmd, capture_output=True, shell=True)
 
+# %%
+for r in range(5, 8):
+    cmd = ("java -jar negsel2.jar -alphabet file://data/syscalls/snd-unm/snd-unm.alpha"
+        " -self ./data/syscalls/snd-unm/snd_unm_train_substr.train -n 7 -l -c -r " + str(r) +
+        " < ./data/syscalls/snd-unm/snd_unm_2_substr.test > "
+        "./data/syscalls/snd-unm/snd_unm_2_substr_res_" + str(r) + ".txt")
+    subprocess.run(cmd, capture_output=True, shell=True)
+
 
 # %% [markdown]
 # # Classification
@@ -247,4 +255,12 @@ for r in range(1, 8):
     res_file = snd_unm_path + '/snd_unm_1_substr_res_' + str(r) + '.txt'
     substr_file = snd_unm_path + '/snd_unm_1_substr.csv'
     name = 'snd_unm_1_results_' + str(r)
+    calculate_auc(res_file, substr_file, name)
+
+# %%
+# unm_2
+for r in range(5, 8):
+    res_file = snd_unm_path + '/snd_unm_2_substr_res_' + str(r) + '.txt'
+    substr_file = snd_unm_path + '/snd_unm_2_substr.csv'
+    name = 'snd_unm_2_results_' + str(r)
     calculate_auc(res_file, substr_file, name)
