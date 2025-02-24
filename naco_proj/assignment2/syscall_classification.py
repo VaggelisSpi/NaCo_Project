@@ -9,7 +9,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.15.2
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: AI
 #     language: python
 #     name: python3
 # ---
@@ -18,10 +18,9 @@
 # # Imports and setup
 
 # %%
-
-# %%
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn import metrics
 
 # %%
 snd_cert_path = "./data/syscalls/snd-cert"
@@ -148,7 +147,7 @@ def analyse_df(df: pd.DataFrame, name: str) -> None:
 
 
 # %%
-# analyse_df(snd_cert_1_data, "snd_cert_1_data")
+# analyse_df(snd_cert_2_data, "snd_cert_2_data")
 # analyse_df(snd_cert_2_data, "snd_cert_2_data")
 # analyse_df(snd_cert_3_data, "snd_cert_3_data")
 
@@ -161,7 +160,7 @@ def analyse_df(df: pd.DataFrame, name: str) -> None:
 
 # %%
 
-preprocess(snd_cert_1_data, "snd_cert_1", snd_cert_path)
+preprocess(snd_cert_2_data, "snd_cert_2", snd_cert_path)
 preprocess(snd_cert_2_data, "snd_cert_2", snd_cert_path)
 preprocess(snd_cert_3_data, "snd_cert_3", snd_cert_path)
 preprocess(snd_cert_train_data, "snd_cert_train", snd_cert_path, True)
@@ -175,17 +174,77 @@ preprocess(snd_unm_train_data, "snd_unm_train", snd_unm_path, True)
 # # Run negative selection
 
 # %%
-# run bash command
 import subprocess
 
-subprocess.run(
-    "java -jar negsel2.jar -alphabet file://syscalls/snd-cert/snd-cert.alpha"
-    " -self syscalls/snd-cert/snd_cert_train_substr.train -n 7 -l -c -r 1 < syscalls/snd-cert/snd_cert_1_substr.test"
-    " > syscalls/snd-cert/snd_cert_1_substr_res.txt"
-)
-
-# %% [markdown]
-# # Train the classifier
+for r in range(1, 8):
+    for i in range(1, 3):
+        cmd = ("java -jar negsel2.jar -alphabet file://data/syscalls/snd-cert/snd-cert.alpha"
+            " -self ./data/syscalls/snd-cert/snd_cert_train_substr.train -n 7 -l -c -r " + str(r) +
+            " < ./data/syscalls/snd-cert/snd_cert_" + str(i) + "_substr.test > "
+            "./data/syscalls/snd-cert/snd_cert_" + str(i) + "_substr_res_" + str(r) + ".txt")
+        subprocess.run(cmd, capture_output=True, shell=True)
 
 # %%
-# training
+for r in range(1, 8):
+    cmd = ("java -jar negsel2.jar -alphabet file://data/syscalls/snd-unm/snd-unm.alpha"
+        " -self ./data/syscalls/snd-unm/snd_unm_train_substr.train -n 7 -l -c -r " + str(r) +
+        " < ./data/syscalls/snd-unm/snd_unm_1_substr.test > "
+        "./data/syscalls/snd-unm/snd_unm_1_substr_res_" + str(r) + ".txt")
+    subprocess.run(cmd, capture_output=True, shell=True)
+
+
+# %% [markdown]
+# # Classification
+
+# %%
+def load_results(res_file: str, substr_file: str):
+    df = pd.DataFrame()
+    df['score'] = pd.read_csv(res_file)
+    df['data'] = pd.read_csv(substr_file, usecols=['data'])
+    df['label'] = pd.read_csv(substr_file, usecols=['label'])
+    df['id'] = pd.read_csv(substr_file, usecols=['id'])
+
+    return df
+
+
+def average_scores(df: pd.DataFrame):
+    avg_df = df.groupby('id', as_index=False)['score'].mean().reset_index()
+    df_labels = df.groupby('id')['label'].first().reset_index()
+    avg_df = pd.merge(avg_df, df_labels, on='id')
+    avg_df.drop(columns=['index', 'id'], inplace=True)
+    
+    return avg_df
+
+
+def calculate_auc(res_file: str, substr_file: str, name: str):
+    df = load_results(res_file, substr_file)
+    avg_df = average_scores(df)
+    auc = metrics.roc_auc_score(avg_df['label'], avg_df['score'])
+    print("AUC for " + name)
+    print(auc)
+
+
+
+# %%
+# cert_1
+for r in range(1, 8):
+    res_file = snd_cert_path + '/snd_cert_1_substr_res_' + str(r) + '.txt'
+    substr_file = snd_cert_path + '/snd_cert_1_substr.csv'
+    name = 'snd_cert_1_results_' + str(r)
+    calculate_auc(res_file, substr_file, name)
+
+# %%
+# cert_2
+for r in range(1, 8):
+    res_file = snd_cert_path + '/snd_cert_2_substr_res_' + str(r) + '.txt'
+    substr_file = snd_cert_path + '/snd_cert_2_substr.csv'
+    name = 'snd_cert_2_results_' + str(r)
+    calculate_auc(res_file, substr_file, name)
+
+# %%
+# unm_1
+for r in range(1, 8):
+    res_file = snd_unm_path + '/snd_unm_1_substr_res_' + str(r) + '.txt'
+    substr_file = snd_unm_path + '/snd_unm_1_substr.csv'
+    name = 'snd_unm_1_results_' + str(r)
+    calculate_auc(res_file, substr_file, name)
