@@ -1,5 +1,6 @@
 from PIL import Image
 import numpy as np
+from sklearn.cluster import KMeans
 
 
 def nearest_color(pixel, colors):
@@ -100,8 +101,17 @@ def PSO(image, k, n_particles, evaluation=nearest_color, max_iter=50, omega=0.73
             color_quantization(image, global_best, name)
 
 
-def k_means():
-    pass
+def k_means(image, k):
+    image = np.array(image, dtype=np.uint8)
+    pixels = image.reshape(-1, 3)
+
+    kmeans = KMeans(k).fit(pixels)
+    colors = kmeans.cluster_centers_
+
+    print("k-means")
+    print(colors)
+    name = name = "K_means.png"
+    color_quantization(image, colors, name)
 
 
 if __name__ == "__main__":
@@ -124,3 +134,4 @@ if __name__ == "__main__":
     PSO(img, 4, 4, nearest_color)  # parameter omega, alpha1, alpha2 from lecture
 
     # K-MEANS
+    k_means(img, 4)
