@@ -271,7 +271,7 @@ class Particle {
 		let dim = this.pos.length
 		// initialise the vector of the sums of the directions, that will then be normalised, and used to calculate the 
 		// new alignment vector
-		let sum = new Array(dim).fill(0)
+		let alignment = new Array(dim).fill(0)
 		let count = 0; // the number of particles within neighborRadius distance
 
 		for (const p of this.S.swarm) {
@@ -281,7 +281,8 @@ class Particle {
 			let distance = this.calculateDistance(this.pos, p.pos)
 
 			if (distance <= neighborRadius) {
-				sum = this.addVectors(sum, p.dir)
+				// alignment = this.addVectors(alignment, p.dir)
+				alignment = this.addVectors(alignment, p.dir)
 				count++;
 			}
 		}
@@ -290,8 +291,9 @@ class Particle {
             return this.normalizeVector(new Array(dim).fill(0));
         }
 
-        const avg = this.multiplyVector(sum, 1 / count);
-        return this.normalizeVector(avg);
+        alignment = this.multiplyVector(alignment, 1 / count);
+		alignment = this.subtractVectors(alignment, this.dir)
+        return this.normalizeVector(alignment);
 	}
 	
 	// should return a unit vector in the direction from current position to the 
@@ -300,7 +302,7 @@ class Particle {
 		let dim = this.pos.length
 		// initialise the vector of the sums of the positions, that will then be normalised, and used to calculate the 
 		// new cohesion vector
-		let sum = new Array(dim).fill(0)
+		let cohesion = new Array(dim).fill(0)
 		let count = 0; // the number of particles within neighborRadius distance
 
 		for (const p of this.S.swarm) {
@@ -310,7 +312,7 @@ class Particle {
 			let distance = this.calculateDistance(this.pos, p.pos)
 
 			if (distance <= neighborRadius) {
-				sum = this.addVectors(sum, p.pos)
+				cohesion = this.addVectors(cohesion, p.pos)
 				count++;
 			}
 		}
@@ -319,17 +321,17 @@ class Particle {
             return this.normalizeVector(new Array(dim).fill(0));
         }
 
-        const avg = this.multiplyVector(sum, 1 / count);
-        const vectorToAvg = this.subtractVectors(avg, this.pos);
-        return this.normalizeVector(vectorToAvg);
+        cohesion = this.multiplyVector(cohesion, 1 / count);
+        cohesion = this.subtractVectors(cohesion, this.pos);
+        return this.normalizeVector(cohesion);
 	}
 	
 	// as cohesionVector, but now return the opposite direction for the given 
 	separationVector( neighborRadius ){
 		let dim = this.pos.length
 		// initialise the vector of the sums of the positions, that will then be normalised, and used to calculate the 
-		// new cohesion vector
-		let sum = new Array(dim).fill(0)
+		// new separation vector
+		let separation = new Array(dim).fill(0)
 		let count = 0; // the number of particles within neighborRadius distance
 
 		for (const p of this.S.swarm) {
@@ -339,7 +341,8 @@ class Particle {
 			let distance = this.calculateDistance(this.pos, p.pos)
 
 			if (distance <= neighborRadius) {
-				sum = this.addVectors(sum, p.pos)
+				// sum = this.addVectors(sum, p.pos)
+				separation = this.addVectors(separation, (this.subtractVectors(this.pos, p.pos)))
 				count++;
 			}
 		}
@@ -348,9 +351,8 @@ class Particle {
             return this.normalizeVector(new Array(dim).fill(0));
         }
 
-        const avg = this.multiplyVector(sum, 1 / count);
-        const vectorFromAvg = this.subtractVectors(this.pos, avg);
-        return this.normalizeVector(vectorFromAvg);
+        separation = this.multiplyVector(separation, 1 / count);
+        return this.normalizeVector(separation);
 	}
 	
 	updateVector(){
@@ -380,17 +382,25 @@ class Particle {
         );
 
         // Update position
-        const newPosition = this.addVectors(
+        let newPosition = this.addVectors(
             this.pos, 
-            this.S.normalizeVector(newDirection) // Apply speed if not already normalized
+            this.S.normalizeVector(newDirection)
         );
 
-        // Assign new direction and position
+        // Ensure position is within scene boundaries if necessary
+		if (newPosition[0] < 0 || newPosition[0] >= this.S.w) {
+			newDirection[0] *= -1
+			newPosition = this.addVectors(this.pos, newDirection)
+		}
+
+		if (newPosition[1] < 0 || newPosition[1] >= this.S.h) {
+			newDirection[1] *= -1
+			newPosition = this.addVectors(this.pos, newDirection)
+		}
+
+		// Assign new direction and position
         this.dir = newDirection;
         this.pos = newPosition;
-
-        // Ensure position is within scene boundaries if necessary
-        // this.pos = this.S.clampPosition(this.pos);
 		
 	}
 	
