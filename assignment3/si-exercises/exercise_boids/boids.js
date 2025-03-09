@@ -384,24 +384,12 @@ class Particle {
         // Update position
         let newPosition = this.addVectors(
             this.pos, 
-            this.S.normalizeVector(newDirection)
+            this.multiplyVector(newDirection, this.speed)
         );
-
-        // Ensure position is within scene boundaries if necessary
-		if (newPosition[0] < 0 || newPosition[0] >= this.S.w) {
-			newDirection[0] *= -1
-			newPosition = this.addVectors(this.pos, newDirection)
-		}
-
-		if (newPosition[1] < 0 || newPosition[1] >= this.S.h) {
-			newDirection[1] *= -1
-			newPosition = this.addVectors(this.pos, newDirection)
-		}
 
 		// Assign new direction and position
         this.dir = newDirection;
-        this.pos = newPosition;
-		
+        this.pos = this.S.wrap(newPosition);
 	}
 	
 }
