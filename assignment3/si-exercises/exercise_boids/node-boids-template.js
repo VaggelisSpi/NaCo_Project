@@ -13,6 +13,7 @@ class Particle {
 		this.pos = this.S.randomPosition() 
 		this.dir = this.S.randomDirection()
 	}
+
 	// return a + b
 	addVectors( a, b ){
 		const dim = a.length
@@ -22,6 +23,7 @@ class Particle {
 		}
 		return out
 	}
+
 	// return a - b
 	subtractVectors( a, b ){
 		const dim = a.length
@@ -31,36 +33,116 @@ class Particle {
 		}
 		return out
 	}
+
 	// multiply vector by a constant
 	multiplyVector( a, c ){
 		return a.map(( x ) => x * c ) 
 	}
+
 	// normalize vector to unit length
 	normalizeVector( a ){
 		return this.S.normalizeVector(a)
+	}
+
+	// calculate the distance between 2 vectors
+	calculateDistance( a, b ){
+		let dim = a.length
+		let distance = 0
+		for (let i = 0; i < dim; i++) {
+			distance += (a[i] - b[i])**2;
+			
+		}
+		return Math.sqrt(distance);
 	}
 	
 	// should return a unit vector in average neighbor direction for neighbors within 
 	// distance neighborRadius 
 	alignmentVector( neighborRadius ){
-		
-		return this.dir
-	
+		let dim = this.pos.length
+		// initialise the vector of the sums of the directions, that will then be normalised, and used to calculate the 
+		// new alignment vector
+		let alignment = new Array(dim).fill(0)
+		let count = 0; // the number of particles within neighborRadius distance
+
+		for (const p of this.S.swarm) {
+			if (p === this) continue;
+			
+			// calculate distance between this particle and p
+			let distance = this.calculateDistance(this.pos, p.pos)
+
+			if (distance <= neighborRadius) {
+				// alignment = this.addVectors(alignment, p.dir)
+				alignment = this.addVectors(alignment, p.dir)
+				count++;
+			}
+		}
+
+		if (count === 0) {
+            return this.normalizeVector(new Array(dim).fill(0));
+        }
+
+        alignment = this.multiplyVector(alignment, 1 / count);
+		alignment = this.subtractVectors(alignment, this.dir)
+        return this.normalizeVector(alignment);
 	}
 	
 	// should return a unit vector in the direction from current position to the 
 	// average position of neighbors within distance neighborRadius 
 	cohesionVector( neighborRadius ){
-		
-		return this.dir
-	
+		let dim = this.pos.length
+		// initialise the vector of the sums of the positions, that will then be normalised, and used to calculate the 
+		// new cohesion vector
+		let cohesion = new Array(dim).fill(0)
+		let count = 0; // the number of particles within neighborRadius distance
+
+		for (const p of this.S.swarm) {
+			if (p === this) continue;
+			
+			// calculate distance between this particle and p
+			let distance = this.calculateDistance(this.pos, p.pos)
+
+			if (distance <= neighborRadius) {
+				cohesion = this.addVectors(cohesion, p.pos)
+				count++;
+			}
+		}
+
+		if (count === 0) {
+            return this.normalizeVector(new Array(dim).fill(0));
+        }
+
+        cohesion = this.multiplyVector(cohesion, 1 / count);
+        cohesion = this.subtractVectors(cohesion, this.pos);
+        return this.normalizeVector(cohesion);
 	}
 	
 	// as cohesionVector, but now return the opposite direction for the given 
 	separationVector( neighborRadius ){
-		
-		return this.dir 
-		
+		let dim = this.pos.length
+		// initialise the vector of the sums of the positions, that will then be normalised, and used to calculate the 
+		// new separation vector
+		let separation = new Array(dim).fill(0)
+		let count = 0; // the number of particles within neighborRadius distance
+
+		for (const p of this.S.swarm) {
+			if (p === this) continue;
+			
+			// calculate distance between this particle and p
+			let distance = this.calculateDistance(this.pos, p.pos)
+
+			if (distance <= neighborRadius) {
+				// sum = this.addVectors(sum, p.pos)
+				separation = this.addVectors(separation, (this.subtractVectors(this.pos, p.pos)))
+				count++;
+			}
+		}
+
+		if (count === 0) {
+            return this.normalizeVector(new Array(dim).fill(0));
+        }
+
+        separation = this.multiplyVector(separation, 1 / count);
+        return this.normalizeVector(separation);
 	}
 	
 	updateVector(){
@@ -78,12 +160,42 @@ class Particle {
 		// Make sure to update the properties this.dir and this.pos accordingly.
 		// What happens when the new position lies across the field boundary? 
 		
-		this.pos = this.pos
-		this.dir = this.dir 	
+		// Combine influences
+        const totalInfluence = this.addVectors(
+            this.addVectors(align, cohesion), 
+            separation
+        );
+
+        // Update direction
+        const newDirection = this.normalizeVector(
+            this.addVectors(this.dir, totalInfluence)
+        );
+
+        // Update position
+        let newPosition = this.addVectors(
+            this.pos, 
+            this.S.normalizeVector(newDirection)
+        );
+
+        // Ensure position is within scene boundaries if necessary
+		if (newPosition[0] < 0 || newPosition[0] >= this.S.w) {
+			newDirection[0] *= -1
+			newPosition = this.addVectors(this.pos, newDirection)
+		}
+
+		if (newPosition[1] < 0 || newPosition[1] >= this.S.h) {
+			newDirection[1] *= -1
+			newPosition = this.addVectors(this.pos, newDirection)
+		}
+
+		// Assign new direction and position
+        this.dir = newDirection;
+        this.pos = newPosition;
 		
 	}
 	
 }
+
 
 
 /* =========  you don't need to touch this bit. */
