@@ -49,12 +49,22 @@ def PSO(image, k, n_particles, evaluation=nearest_color, max_iter=50, omega=0.73
     x = np.random.randint(0, 256, (n_particles, k, 3))
 
     # initialize velocities, local best and global best
+    iter = 0
     velocity = np.zeros_like(x)
     local_best = np.copy(x)
     local_best_score = np.full(n_particles, np.inf)
-    global_best = np.copy(x)
+    global_best = None
     global_best_score = np.inf
-    iter = 0
+    for i in range(n_particles):
+        score = 0
+        for pixel in pixels:
+            score += evaluation(pixel, x[i])[1]
+        if score < local_best_score[i]:
+            local_best[i] = x[i]
+            local_best_score[i] = score
+        if score < global_best_score:
+            global_best_score = score
+            global_best = np.copy(x[i])
 
     # write initial state to file
     path = "./assignment3/si-exercises/exercise_pso/"
@@ -70,10 +80,11 @@ def PSO(image, k, n_particles, evaluation=nearest_color, max_iter=50, omega=0.73
     while iter < max_iter:
         iter += 1
         for i in range(n_particles):
-            r1 = np.random.rand(3)
-            r2 = np.random.rand(3)
-            velocity = omega * velocity + alpha1 * r1 * (local_best - x) + alpha2 * r2 * (global_best - x)
+            r1 = np.random.rand(k, 3)
+            r2 = np.random.rand(k, 3)
+            velocity[i] = omega * velocity[i] + alpha1 * r1 * (local_best[i] - x[i]) + alpha2 * r2 * (global_best - x[i])
         x = np.array(x + velocity, dtype=int)
+        
         for i in range(n_particles):
             score = 0
             for pixel in pixels:
