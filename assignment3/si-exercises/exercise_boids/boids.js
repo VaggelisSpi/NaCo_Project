@@ -253,17 +253,6 @@ class Particle {
 	normalizeVector( a ){
 		return this.S.normalizeVector(a)
 	}
-
-	// calculate the distance between 2 vectors
-	calculateDistance( a, b ){
-		let dim = a.length
-		let distance = 0
-		for (let i = 0; i < dim; i++) {
-			distance += (a[i] - b[i])**2;
-			
-		}
-		return Math.sqrt(distance);
-	}
 	
 	// should return a unit vector in average neighbor direction for neighbors within 
 	// distance neighborRadius 
@@ -277,9 +266,7 @@ class Particle {
 		for (const p of this.S.swarm) {
 			if (p === this) continue;
 			
-			// calculate distance between this particle and p
-			let distance = this.calculateDistance(this.pos, p.pos)
-
+			let distance = this.S.dist(this.pos, p.pos);
 			if (distance <= neighborRadius) {
 				// alignment = this.addVectors(alignment, p.dir)
 				alignment = this.addVectors(alignment, p.dir)
@@ -308,11 +295,10 @@ class Particle {
 		for (const p of this.S.swarm) {
 			if (p === this) continue;
 			
-			// calculate distance between this particle and p
-			let distance = this.calculateDistance(this.pos, p.pos)
-
+			let distance = this.S.dist(this.pos, p.pos);
 			if (distance <= neighborRadius) {
-				cohesion = this.addVectors(cohesion, p.pos)
+				let wrappedPos = this.S.wrap(p.pos, this.pos);
+				cohesion = this.addVectors(cohesion, wrappedPos)
 				count++;
 			}
 		}
@@ -337,12 +323,12 @@ class Particle {
 		for (const p of this.S.swarm) {
 			if (p === this) continue;
 			
-			// calculate distance between this particle and p
-			let distance = this.calculateDistance(this.pos, p.pos)
-
+			let distance = this.S.dist(this.pos, p.pos);
 			if (distance <= neighborRadius) {
-				// sum = this.addVectors(sum, p.pos)
-				separation = this.addVectors(separation, (this.subtractVectors(this.pos, p.pos)))
+				let wrappedPos = this.S.wrap(p.pos, this.pos);
+				let difference = this.subtractVectors(this.pos, wrappedPos);
+				difference = this.multiplyVector(this.normalizeVector(difference), 1 / distance);
+				separation = this.addVectors(separation, difference);
 				count++;
 			}
 		}
