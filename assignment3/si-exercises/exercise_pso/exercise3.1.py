@@ -84,7 +84,7 @@ def PSO(image, k, n_particles, evaluation=nearest_color, max_iter=50, omega=0.73
             r2 = np.random.rand(k, 3)
             velocity[i] = omega * velocity[i] + alpha1 * r1 * (local_best[i] - x[i]) + alpha2 * r2 * (global_best - x[i])
         x = np.array(x + velocity, dtype=int)
-        
+
         for i in range(n_particles):
             score = 0
             for pixel in pixels:
@@ -107,6 +107,8 @@ def PSO(image, k, n_particles, evaluation=nearest_color, max_iter=50, omega=0.73
 
         # show color palette so far + image every 5 iterations
         if iter % 5 == 0:
+            print("PSO")
+            print("iteration: " + str(iter))
             print(global_best)
             name = "PSO" + str(iter) + ".png"
             color_quantization(image, global_best, name)
