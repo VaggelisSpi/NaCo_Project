@@ -79,18 +79,17 @@ def calculate_nearest_neighbour_distance(df: pd.DataFrame) -> pd.DataFrame:
 
     return nnd_df
 
-
-
+# print("majin duu")
 # load the data
-df = pd.read_csv("test_exp.csv")
+# df = pd.read_csv("test_exp.csv")
 
-order_df = calculate_order_parameter(df)
+# order_df = calculate_order_parameter(df)
 
-# visualisations
-plt.plot(order_df['time'], order_df['O'])
-plt.xlabel('Time')
-plt.ylabel('Order Parameter (O)')
-plt.title('Order Parameter Over Time')
-plt.show()
+# # visualisations
+# plt.plot(order_df['time'], order_df['O'])
+# plt.xlabel('Time')
+# plt.ylabel('Order Parameter (O)')
+# plt.title('Order Parameter Over Time')
+# plt.show()
 
-nnd_df = calculate_nearest_neighbour_distance(df)
+# nnd_df = calculate_nearest_neighbour_distance(df)
