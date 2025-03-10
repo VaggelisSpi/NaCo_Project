@@ -50,6 +50,37 @@ def calculate_order_parameter(df: pd.DataFrame) -> pd.DataFrame:
 
     return order_df
 
+def calculate_nearest_neighbour_distance(df: pd.DataFrame) -> pd.DataFrame:
+    # get unique times
+    unique_times = df['time'].unique()
+
+    nearest_neighbour_distances = []
+
+    for time in unique_times:
+        # Filter data for the current time
+        current_df = df[df['time'] == time]
+        
+        # If there is only one Boid, skip (no neighbors)
+        if len(current_df) < 2:
+            continue
+
+        # Calculate pairwise distances
+        for _, row in current_df.iterrows():
+            # Calculate distances to all other Boids
+            other_boids = current_df[current_df['id'] != row['id']]
+            distances = np.sqrt((other_boids['x'] - row['x'])**2 + (other_boids['y'] - row['y'])**2)
+            nearest_distance = distances.min()
+            nearest_neighbour_distances.append({'time': time, 'id': row['id'], 'distance': nearest_distance})
+
+    nnd_df = pd.DataFrame(nearest_neighbour_distances)
+
+    # optionally save the nearest neighbours distances to csv
+    # nnd_df.to_csv('nearest_neighbour_distances.csv', index=False)
+
+    return nnd_df
+
+
+
 # load the data
 df = pd.read_csv("test_exp.csv")
 
@@ -62,3 +93,4 @@ plt.ylabel('Order Parameter (O)')
 plt.title('Order Parameter Over Time')
 plt.show()
 
+nnd_df = calculate_nearest_neighbour_distance(df)
