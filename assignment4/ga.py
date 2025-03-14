@@ -17,11 +17,11 @@ def mutation_if(current: List[int], mutated: List[int]) -> Tuple[List[int], int]
 
     return current, current_fit
 
-def mutation_always(current: List[int], mutated: List[int]) -> List[int]:
-    return mutated.copy()
+def mutation_always(current: List[int], mutated: List[int]) -> Tuple[List[int], int]:
+    return mutated.copy(), fitness(current)
 
 
-def ga(mutation_func: Callable[[List[int], List[int]], List[int]], l: int = 5, mu: float = 0.05, max_generations: int = 100) -> Tuple[List[int], List[int]]:
+def ga(mutation_func: Callable[[List[int], List[int]], Tuple[List[int], int]], l: int = 5, mu: float = 0.05, max_generations: int = 100, debug: bool = False) -> Tuple[List[int], List[int]]:
     # Initialize a random bit string
     current = [random.randint(0, 1) for _ in range(l)]
     generation = 0
@@ -49,9 +49,10 @@ def ga(mutation_func: Callable[[List[int], List[int]], List[int]], l: int = 5, m
             print("Max generations reached without finding the solution!")
             break
 
-        # Print progress (optional)
-        if generation % 10 == 0:
-            print(f"Generation {generation}: Current bit string = {current}, Fitness = {current_fit}")
+        if debug:
+            # Print progress (optional)
+            if generation % 10 == 0:
+                print(f"Generation {generation}: Current bit string = {current}, Fitness = {current_fit}")
 
     # Print the final result
     print("\nFinal result:")
