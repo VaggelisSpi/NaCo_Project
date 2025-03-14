@@ -13,8 +13,9 @@ def mutation_if(current: List[int], mutated: List[int]) -> Tuple[List[int], int]
     # Check if the mutated string is closer to the goal (has more ones)
     if mutated_fit > current_fit:
         current = mutated.copy()
+        current_fit = mutated_fit
 
-    return current, fit
+    return current, current_fit
 
 def mutation_always(current: List[int], mutated: List[int]) -> List[int]:
     return mutated.copy()
