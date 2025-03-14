@@ -1,9 +1,11 @@
 import random
 from typing import List, Callable, Tuple
 
+
 # Fitness function: count the number of ones
 def fitness(bit_string: List[int]) -> int:
     return sum(bit_string)
+
 
 def mutation_if(current: List[int], mutated: List[int]) -> Tuple[List[int], int]:
     # Selection (1+1 GA)
@@ -17,11 +19,18 @@ def mutation_if(current: List[int], mutated: List[int]) -> Tuple[List[int], int]
 
     return current, current_fit
 
+
 def mutation_always(current: List[int], mutated: List[int]) -> Tuple[List[int], int]:
     return mutated.copy(), fitness(current)
 
 
-def ga(mutation_func: Callable[[List[int], List[int]], Tuple[List[int], int]], l: int = 5, mu: float = 0.05, max_generations: int = 100, debug: bool = False) -> Tuple[List[int], List[int]]:
+def ga(
+    mutation_func: Callable[[List[int], List[int]], Tuple[List[int], int]],
+    l: int = 5,
+    mu: float = 0.05,
+    max_generations: int = 100,
+    debug: bool = False,
+) -> Tuple[List[int], List[int]]:
     # Initialize a random bit string
     current = [random.randint(0, 1) for _ in range(l)]
     generation = 0
@@ -62,7 +71,8 @@ def ga(mutation_func: Callable[[List[int], List[int]], Tuple[List[int], int]], l
 
     return current, fits
 
+
 if __name__ == "__main__":
     l = 100
-    mu = 1/l
+    mu = 1 / l
     ga(mutation_if, l, mu, 1500)

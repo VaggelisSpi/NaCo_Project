@@ -68,6 +68,7 @@ snd_unm_train_data["label"] = 0
 # %% [markdown]
 # # Preprocessing
 
+
 # %%
 def preprocess_data_frame(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -116,9 +117,7 @@ def extract_substrings(df: pd.DataFrame, substr_len: int = 7) -> pd.DataFrame:
     return pd.DataFrame(substr_df)
 
 
-def preprocess(
-    df: pd.DataFrame, name: str, data_path: str, is_train: bool = False
-) -> None:
+def preprocess(df: pd.DataFrame, name: str, data_path: str, is_train: bool = False) -> None:
     """
     Apply all the preprocessing steps in a dataframe and save all the resulting dataframes
     """
@@ -178,108 +177,123 @@ import subprocess
 
 for r in range(1, 8):
     for i in range(1, 3):
-        cmd = ("java -jar negsel2.jar -alphabet file://data/syscalls/snd-cert/snd-cert.alpha"
-            " -self ./data/syscalls/snd-cert/snd_cert_train_substr.train -n 7 -l -c -r " + str(r) +
-            " < ./data/syscalls/snd-cert/snd_cert_" + str(i) + "_substr.test > "
-            "./data/syscalls/snd-cert/snd_cert_" + str(i) + "_substr_res_" + str(r) + ".txt")
+        cmd = (
+            "java -jar negsel2.jar -alphabet file://data/syscalls/snd-cert/snd-cert.alpha"
+            " -self ./data/syscalls/snd-cert/snd_cert_train_substr.train -n 7 -l -c -r "
+            + str(r)
+            + " < ./data/syscalls/snd-cert/snd_cert_"
+            + str(i)
+            + "_substr.test > "
+            "./data/syscalls/snd-cert/snd_cert_" + str(i) + "_substr_res_" + str(r) + ".txt"
+        )
         subprocess.run(cmd, capture_output=True, shell=True)
 
 # %%
 for r in range(1, 8):
-    cmd = ("java -jar negsel2.jar -alphabet file://data/syscalls/snd-unm/snd-unm.alpha"
-        " -self ./data/syscalls/snd-unm/snd_unm_train_substr.train -n 7 -l -c -r " + str(r) +
-        " < ./data/syscalls/snd-unm/snd_unm_1_substr.test > "
-        "./data/syscalls/snd-unm/snd_unm_1_substr_res_" + str(r) + ".txt")
+    cmd = (
+        "java -jar negsel2.jar -alphabet file://data/syscalls/snd-unm/snd-unm.alpha"
+        " -self ./data/syscalls/snd-unm/snd_unm_train_substr.train -n 7 -l -c -r "
+        + str(r)
+        + " < ./data/syscalls/snd-unm/snd_unm_1_substr.test > "
+        "./data/syscalls/snd-unm/snd_unm_1_substr_res_" + str(r) + ".txt"
+    )
     subprocess.run(cmd, capture_output=True, shell=True)
 
 # %%
 for r in range(5, 8):
-    cmd = ("java -jar negsel2.jar -alphabet file://data/syscalls/snd-unm/snd-unm.alpha"
-        " -self ./data/syscalls/snd-unm/snd_unm_train_substr.train -n 7 -l -c -r " + str(r) +
-        " < ./data/syscalls/snd-unm/snd_unm_2_substr.test > "
-        "./data/syscalls/snd-unm/snd_unm_2_substr_res_" + str(r) + ".txt")
+    cmd = (
+        "java -jar negsel2.jar -alphabet file://data/syscalls/snd-unm/snd-unm.alpha"
+        " -self ./data/syscalls/snd-unm/snd_unm_train_substr.train -n 7 -l -c -r "
+        + str(r)
+        + " < ./data/syscalls/snd-unm/snd_unm_2_substr.test > "
+        "./data/syscalls/snd-unm/snd_unm_2_substr_res_" + str(r) + ".txt"
+    )
     subprocess.run(cmd, capture_output=True, shell=True)
 
 # %%
-cmd = ("java -jar negsel2.jar -alphabet file://data/syscalls/snd-cert/snd-cert.alpha"
-        " -self ./data/syscalls/snd-cert/snd_cert_train_substr.train -n 7 -l -c -r 7"
-        " < ./data/syscalls/snd-cert/snd_cert_3_substr.test > "
-        "./data/syscalls/snd-cert/snd_cert_3_substr_res_7.txt")
+cmd = (
+    "java -jar negsel2.jar -alphabet file://data/syscalls/snd-cert/snd-cert.alpha"
+    " -self ./data/syscalls/snd-cert/snd_cert_train_substr.train -n 7 -l -c -r 7"
+    " < ./data/syscalls/snd-cert/snd_cert_3_substr.test > "
+    "./data/syscalls/snd-cert/snd_cert_3_substr_res_7.txt"
+)
 subprocess.run(cmd, capture_output=True, shell=True)
 
-cmd = ("java -jar negsel2.jar -alphabet file://data/syscalls/snd-unm/snd-unm.alpha"
-        " -self ./data/syscalls/snd-unm/snd_unm_train_substr.train -n 7 -l -c -r 6"
-        " < ./data/syscalls/snd-unm/snd_unm_3_substr.test > "
-        "./data/syscalls/snd-unm/snd_unm_3_substr_res_6.txt")
+cmd = (
+    "java -jar negsel2.jar -alphabet file://data/syscalls/snd-unm/snd-unm.alpha"
+    " -self ./data/syscalls/snd-unm/snd_unm_train_substr.train -n 7 -l -c -r 6"
+    " < ./data/syscalls/snd-unm/snd_unm_3_substr.test > "
+    "./data/syscalls/snd-unm/snd_unm_3_substr_res_6.txt"
+)
 subprocess.run(cmd, capture_output=True, shell=True)
 
 
 # %% [markdown]
 # # Classification
 
+
 # %%
 def load_results(res_file: str, substr_file: str) -> metrics.RocCurveDisplay:
     df = pd.DataFrame()
-    df['score'] = pd.read_csv(res_file)
-    df['data'] = pd.read_csv(substr_file, usecols=['data'])
-    df['label'] = pd.read_csv(substr_file, usecols=['label'])
-    df['id'] = pd.read_csv(substr_file, usecols=['id'])
+    df["score"] = pd.read_csv(res_file)
+    df["data"] = pd.read_csv(substr_file, usecols=["data"])
+    df["label"] = pd.read_csv(substr_file, usecols=["label"])
+    df["id"] = pd.read_csv(substr_file, usecols=["id"])
 
     return df
 
 
 def average_scores(df: pd.DataFrame):
-    avg_df = df.groupby('id', as_index=False)['score'].mean().reset_index()
-    df_labels = df.groupby('id')['label'].first().reset_index()
-    avg_df = pd.merge(avg_df, df_labels, on='id')
-    avg_df.drop(columns=['index', 'id'], inplace=True)
-    
+    avg_df = df.groupby("id", as_index=False)["score"].mean().reset_index()
+    df_labels = df.groupby("id")["label"].first().reset_index()
+    avg_df = pd.merge(avg_df, df_labels, on="id")
+    avg_df.drop(columns=["index", "id"], inplace=True)
+
     return avg_df
 
 
 def calculate_auc(res_file: str, substr_file: str, name: str):
     df = load_results(res_file, substr_file)
     avg_df = average_scores(df)
-    auc = metrics.roc_auc_score(avg_df['label'], avg_df['score'])
+    auc = metrics.roc_auc_score(avg_df["label"], avg_df["score"])
     print("AUC for " + name)
     print(auc)
 
-    fpr, tpr, thresholds = metrics.roc_curve(avg_df['label'], avg_df['score'])
+    fpr, tpr, thresholds = metrics.roc_curve(avg_df["label"], avg_df["score"])
     roc = metrics.RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=auc)
     return roc
-
 
 
 # %%
 # cert_1
 for r in range(1, 8):
-    res_file = snd_cert_path + '/snd_cert_1_substr_res_' + str(r) + '.txt'
-    substr_file = snd_cert_path + '/snd_cert_1_substr.csv'
-    name = 'snd_cert_1_results_' + str(r)
+    res_file = snd_cert_path + "/snd_cert_1_substr_res_" + str(r) + ".txt"
+    substr_file = snd_cert_path + "/snd_cert_1_substr.csv"
+    name = "snd_cert_1_results_" + str(r)
     calculate_auc(res_file, substr_file, name)
 
 # %%
 # cert_2
 for r in range(1, 8):
-    res_file = snd_cert_path + '/snd_cert_2_substr_res_' + str(r) + '.txt'
-    substr_file = snd_cert_path + '/snd_cert_2_substr.csv'
-    name = 'snd_cert_2_results_' + str(r)
+    res_file = snd_cert_path + "/snd_cert_2_substr_res_" + str(r) + ".txt"
+    substr_file = snd_cert_path + "/snd_cert_2_substr.csv"
+    name = "snd_cert_2_results_" + str(r)
     calculate_auc(res_file, substr_file, name)
 
 # %%
 # unm_1
 for r in range(1, 8):
-    res_file = snd_unm_path + '/snd_unm_1_substr_res_' + str(r) + '.txt'
-    substr_file = snd_unm_path + '/snd_unm_1_substr.csv'
-    name = 'snd_unm_1_results_' + str(r)
+    res_file = snd_unm_path + "/snd_unm_1_substr_res_" + str(r) + ".txt"
+    substr_file = snd_unm_path + "/snd_unm_1_substr.csv"
+    name = "snd_unm_1_results_" + str(r)
     calculate_auc(res_file, substr_file, name)
 
 # %%
 # unm_2
 for r in range(5, 8):
-    res_file = snd_unm_path + '/snd_unm_2_substr_res_' + str(r) + '.txt'
-    substr_file = snd_unm_path + '/snd_unm_2_substr.csv'
-    name = 'snd_unm_2_results_' + str(r)
+    res_file = snd_unm_path + "/snd_unm_2_substr_res_" + str(r) + ".txt"
+    substr_file = snd_unm_path + "/snd_unm_2_substr.csv"
+    name = "snd_unm_2_results_" + str(r)
     calculate_auc(res_file, substr_file, name)
 
 # %% [markdown]
@@ -290,9 +304,9 @@ fig, axes = plt.subplots(1, 3, figsize=(7, 7), constrained_layout=True)
 
 for i, ax in enumerate(axes.flatten()):
     x = i + 1
-    res_file = snd_cert_path + '/snd_cert_' + str(x) + '_substr_res_7.txt'
-    substr_file = snd_cert_path + '/snd_cert_' + str(x) + '_substr.csv'
-    name = 'snd_cert_' + str(x) + '_results_7'
+    res_file = snd_cert_path + "/snd_cert_" + str(x) + "_substr_res_7.txt"
+    substr_file = snd_cert_path + "/snd_cert_" + str(x) + "_substr.csv"
+    name = "snd_cert_" + str(x) + "_results_7"
     calculate_auc(res_file, substr_file, name)
     roc = calculate_auc(res_file, substr_file, name)
     roc.plot(ax=ax)
@@ -303,10 +317,10 @@ fig, axes = plt.subplots(1, 3, figsize=(10, 10), constrained_layout=True)
 
 for i, ax in enumerate(axes.flatten()):
     x = i + 1
-    r = '7' if x == 1 else '6'
-    res_file = snd_unm_path + '/snd_unm_' + str(x) + '_substr_res_' + r + '.txt'
-    substr_file = snd_unm_path + '/snd_unm_' + str(x) + '_substr.csv'
-    name = 'snd_unm_' + str(x) + '_results_' + r
+    r = "7" if x == 1 else "6"
+    res_file = snd_unm_path + "/snd_unm_" + str(x) + "_substr_res_" + r + ".txt"
+    substr_file = snd_unm_path + "/snd_unm_" + str(x) + "_substr.csv"
+    name = "snd_unm_" + str(x) + "_results_" + r
     roc = calculate_auc(res_file, substr_file, name)
     roc.plot(ax=ax)
     ax.set_title(f"snd_unm_{x}")

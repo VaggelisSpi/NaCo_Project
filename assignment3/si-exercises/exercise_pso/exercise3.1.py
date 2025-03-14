@@ -19,9 +19,7 @@ def nearest_color(pixel, colors):
 def color_distance(col1, col2):
     # for now I implemented Euclidean distance but if we want we can optimize this function to
     # be more perceptually accurate: https://en.wikipedia.org/wiki/Color_difference
-    return np.sqrt((col1[0] - col2[0]) ** 2 +
-                   (col1[1] - col2[1]) ** 2 +
-                   (col1[2] - col2[2]) ** 2)
+    return np.sqrt((col1[0] - col2[0]) ** 2 + (col1[1] - col2[1]) ** 2 + (col1[2] - col2[2]) ** 2)
 
 
 def color_quantization(image, colors, name):
@@ -82,7 +80,9 @@ def PSO(image, k, n_particles, evaluation=nearest_color, max_iter=50, omega=0.73
         for i in range(n_particles):
             r1 = np.random.rand(k, 3)
             r2 = np.random.rand(k, 3)
-            velocity[i] = omega * velocity[i] + alpha1 * r1 * (local_best[i] - x[i]) + alpha2 * r2 * (global_best - x[i])
+            velocity[i] = (
+                omega * velocity[i] + alpha1 * r1 * (local_best[i] - x[i]) + alpha2 * r2 * (global_best - x[i])
+            )
         x = np.array(x + velocity, dtype=int)
 
         for i in range(n_particles):
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     # QUANTIZATION
     # import image
     path = "./assignment3/si-exercises/exercise_pso/"
-    img = Image.open(path + 'image.png')
+    img = Image.open(path + "image.png")
 
     # define color palette from assignment (RGB)
     light_green = [175, 198, 114]
@@ -141,7 +141,7 @@ if __name__ == "__main__":
     colors = np.array([light_green, dark_red, light_red, dark_green])
 
     # color quantization
-    color_quantization(img, colors, 'quantized_image.png')
+    color_quantization(img, colors, "quantized_image.png")
 
     # PSO
     PSO(img, 4, 4, nearest_color)  # parameter omega, alpha1, alpha2 from lecture
