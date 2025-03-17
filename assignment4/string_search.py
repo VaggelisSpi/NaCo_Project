@@ -10,7 +10,8 @@ class GeneticAlgorithm:
         population_size: int = 1,
         mu: float = 0.05,
         tournament_size: int = 1,
-        max_generations: int = 100
+        max_generations: int = 100,
+        generations_to_analyse: int = 10
     ) -> None:
         self.alphabet = alphabet
         self.target = target
@@ -19,6 +20,7 @@ class GeneticAlgorithm:
         self.mu = mu
         self.tournament_size = tournament_size
         self.max_generations = max_generations
+        self.generations_to_analyse = generations_to_analyse
         # List to store average fitness per generation
         self.avg_fitness: List[float] = []
         self.population: List[List[str]] = []
@@ -30,10 +32,39 @@ class GeneticAlgorithm:
 
     def get_avg_fitness(self) -> List[float]:
         return self.avg_fitness
+    
+    def get_hamming_distances(self) -> List[float]:
+        return self.hamming_distances
+
+    @staticmethod
+    def hamming_distance(string1, string2):
+        return sum(char1 != char2 for char1, char2 in zip(string1, string2))
+
+
+    def analyse_diversity(self) -> None:
+        """
+        Calculate diversity metrics
+        For a random sample of the population calculate the hamming distances between them and get the avg
+
+        This will be run every few generations
+        """
+        sample_size = 50
+        if len(self.population) < sample_size:
+            sample = self.population
+        else:
+            sample = random.sample(self.population, sample_size)
+
+        distances = []
+        for i in range(len(sample)):
+            for j in range(i+1, len(sample)):
+                distances.append(self.hamming_distance(sample[i], sample[j]))
+
+        if not distances:
+            self.hamming_distances.append(0.0)
+        else:
+            self.hamming_distances.append(sum(distances) / len(distances))
 
     def run(self) -> Tuple[List[List[str]], int]:
-        debug = False
-    
         # Initialize population
         for _ in range(self.population_size):
             individual = [random.choice(self.alphabet) for _ in range(self.string_length)]
@@ -94,11 +125,10 @@ class GeneticAlgorithm:
                 print("Max generations reached without finding the solution!")
                 break
 
-            if debug:
-                # Print progress (optional)
-                if generation % 10 == 0:
-                    print(f"Generation {generation}: Average self.fitness = {avg_fit:.2f}")
+            if generation % self.generations_to_analyse == 0:
+                self.analyse_diversity()
         
+        self.analyse_diversity()
         return self.population, generation
 
 if __name__ == "__main__":
@@ -115,3 +145,4 @@ if __name__ == "__main__":
     ga = GeneticAlgorithm(english_letters, "abcdefghijklmno", 15, 200, 0.06, 2)
     res, generation = ga.run()
     fits = ga.get_avg_fitness()
+    hamming_distances = ga.get_hamming_distances()
