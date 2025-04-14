@@ -2,6 +2,7 @@ import numpy as np
 from typing import List
 import random
 import matplotlib.pyplot as plt
+import time
 
 
 def simple_EA(
@@ -208,11 +209,16 @@ if __name__ == "__main__":
     N = 100
     K = 20
     G = 2
+    start_time = time.time()
     fitness_avg, fitness_best = simple_EA(cities, sigma, N, K, generations=G)
-    print(fitness_avg)
+    end_time = time.time()
+    print(end_time-start_time)
     make_plot('EA', sigma, N, K, G, fitness_avg, fitness_best)
-    fitness_avg, fitness_best = memetic(cities, sigma, N, K)
     G = 1
+    start_time = time.time()
+    fitness_avg, fitness_best = memetic(cities, sigma, N, K)
+    end_time = time.time()
+    print(end_time-start_time)
     make_plot('MA', sigma, N, K, G, fitness_avg, fitness_best, generations=G)
 
     cities = np.loadtxt("./assignment4/burma14.txt")[:, 1:]
@@ -220,8 +226,14 @@ if __name__ == "__main__":
     N = 100
     K = 20
     G = 2500
+    start_time = time.time()
     fitness_avg, fitness_best = simple_EA(cities, sigma, N, K, generations=G)
+    end_time = time.time()
+    print(end_time-start_time)
     make_plot('EA', sigma, N, K, G, fitness_avg, fitness_best)
     G = 1
+    start_time = time.time()
     fitness_avg, fitness_best = memetic(cities, sigma, N, K, generations=G)
+    end_time = time.time()
+    print(end_time-start_time)
     make_plot('MA', sigma, N, K, G, fitness_avg, fitness_best)
