@@ -16,10 +16,9 @@ def simple_EA(
     cities: list with city coordinates
     sigma: alphabet (size)
     N: population size
+    K: tournament selection parameter
     p: crossover rate
     m: mutation rate
-    fitness_function: function determining the fitness
-    K: tournament selection parameter
     generations: amount of iterations
     '''
     # start with random population of candidate solutions
@@ -61,7 +60,7 @@ def fitness_pop(population: List[List[float]], cities: List[float]) -> List[floa
     return 1 / distances
 
 
-def fitness(candidate: List[float], cities: List[float]) -> float:
+def fitness(candidate: List[int], cities: List[float]) -> float:
     distance = 0
 
     for i in range(len(candidate)-1):
@@ -104,11 +103,59 @@ def crossover(parent1: List[int], parent2: List[int]) -> List[int]:
     return child
 
 
-def memetic():
-    pass
+def memetic(
+        cities: List[float],
+        sigma: int,
+        N: int,
+        K: int,
+        p: float = 0.1,
+        m: float = 0.01,
+        generations: int = 1000):
+    '''
+    cities: list with city coordinates
+    sigma: alphabet (size)
+    N: population size
+    K: tournament selection parameter
+    p: crossover rate
+    m: mutation rate
+    generations: amount of iterations
+    '''
+    # start with random population of candidate solutions
+    population = np.array([np.random.permutation(range(sigma)) for _ in range(N)])
+
+    # apply local search
+    for i, candidate in enumerate(population):
+        population[i] = two_opt(candidate, cities)
+
+    # determine fitness
+    fitness = fitness_pop(population, cities)
+
+    for _ in range(generations):
+        # select the new population
+        new_population = []
+        for i in range(N):
+            parent1, parent2 = population[tournament(N, K, fitness)]
+
+            # crossover
+            if random.random() < p:
+                child = crossover(parent1, parent2)
+            else:
+                child = parent1.copy()
+
+            # mutation
+            if random.random() < m:
+                i, j = random.sample(range(len(child)), 2)
+                child[i], child[j] = child[j], child[i]
+
+            child = two_opt(child, cities)
+            new_population.append(child)
+
+        population = np.array(new_population)
+
+    return population
 
 
-def two_opt(candidate: List[float], cities: List[float]) -> List[float]:
+def two_opt(candidate: List[int], cities: List[float]) -> List[int]:
     best = candidate.copy()
     search = True
 
@@ -119,7 +166,7 @@ def two_opt(candidate: List[float], cities: List[float]) -> List[float]:
                 if (j - i) > 1:
                     new_candidate = best.copy()
                     new_candidate[i:j] = new_candidate[i:j][::-1]
-                    if fitness(new_candidate, cities) > fitness(best, cities):
+                    if fitness(new_candidate, cities) < fitness(best, cities):
                         best = new_candidate
                         search = True
 
@@ -130,7 +177,11 @@ if __name__ == "__main__":
     cities = np.loadtxt("./assignment4/file-tsp.txt")
     population = simple_EA(cities, 50, 100, 20)
     print(population)
+    population = memetic(cities, 50, 100, 20)
+    print(population)
 
     cities = np.loadtxt("./assignment4/berlin52.txt")[:, 1:]
     population = simple_EA(cities, 52, 100, 20)
+    print(population)
+    population = memetic(cities, 50, 100, 20)
     print(population)
