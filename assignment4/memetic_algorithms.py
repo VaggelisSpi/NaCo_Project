@@ -1,7 +1,7 @@
-import pandas as pd
 import numpy as np
 from typing import List
 import random
+import matplotlib.pyplot as plt
 
 
 def simple_EA(
@@ -21,12 +21,16 @@ def simple_EA(
     m: mutation rate
     generations: amount of iterations
     '''
+    fitness_avg = []
+    fitness_best = []
     # start with random population of candidate solutions
     population = np.array([np.random.permutation(range(sigma)) for _ in range(N)])
 
     for _ in range(generations):
         # determine fitness of every solution
         fitness = fitness_pop(population, cities)
+        fitness_avg.append(fitness.sum() / len(fitness))
+        fitness_best.append(max(fitness))
 
         # select the new population
         new_population = []
@@ -48,7 +52,11 @@ def simple_EA(
 
         population = np.array(new_population)
 
-    return population
+    fitness = fitness_pop(population, cities)
+    fitness_avg.append(fitness.sum() / len(fitness))
+    fitness_best.append(max(fitness))
+
+    return fitness_avg, fitness_best
 
 
 def fitness_pop(population: List[List[float]], cities: List[float]) -> List[float]:
@@ -120,6 +128,9 @@ def memetic(
     m: mutation rate
     generations: amount of iterations
     '''
+    fitness_avg = []
+    fitness_best = []
+
     # start with random population of candidate solutions
     population = np.array([np.random.permutation(range(sigma)) for _ in range(N)])
 
@@ -133,6 +144,8 @@ def memetic(
 
         # determine fitness
         fitness = fitness_pop(population, cities)
+        fitness_avg.append(fitness.sum() / len(fitness))
+        fitness_best.append(max(fitness))
 
         for i in range(N):
             parent1, parent2 = population[tournament(N, K, fitness)]
@@ -153,7 +166,11 @@ def memetic(
 
         population = np.array(new_population)
 
-    return population
+    fitness = fitness_pop(population, cities)
+    fitness_avg.append(fitness.sum / len(fitness))
+    fitness_best.append(max(fitness))
+
+    return fitness_avg, fitness_best
 
 
 def two_opt(candidate: List[int], cities: List[float]) -> List[int]:
@@ -174,15 +191,37 @@ def two_opt(candidate: List[int], cities: List[float]) -> List[int]:
     return best
 
 
+def make_plot(algorithm: str, sigma: int, N: int, K: int, G: int, fitness_avg: List[float], fitness_best: List[float]):
+    name = algorithm + '_' + str(sigma) + '_' + str(N) + '_' + str(K) + '_' + str(G) + '.png'
+
+    plt.plot(range(len(fitness_avg)), fitness_avg, label='average fitness')
+    plt.plot(range(len(fitness_best)), fitness_best, label='best fitness')
+    plt.legend()
+    plt.xlabel('Generations')
+    plt.ylabel('Distance (Euclidean)')
+    plt.savefig(name)
+
+
 if __name__ == "__main__":
     cities = np.loadtxt("./assignment4/file-tsp.txt")
-    population = simple_EA(cities, len(cities), 100, 20)
-    print(population)
-    population = memetic(cities, len(cities), 100, 20)
-    print(population)
+    sigma = len(cities)
+    N = 100
+    K = 20
+    G = 2
+    fitness_avg, fitness_best = simple_EA(cities, sigma, N, K, generations=G)
+    print(fitness_avg)
+    make_plot('EA', sigma, N, K, G, fitness_avg, fitness_best)
+    fitness_avg, fitness_best = memetic(cities, sigma, N, K)
+    G = 1
+    make_plot('MA', sigma, N, K, G, fitness_avg, fitness_best, generations=G)
 
     cities = np.loadtxt("./assignment4/burma14.txt")[:, 1:]
-    population = simple_EA(cities, len(cities), 100, 20)
-    print(population)
-    population = memetic(cities, len(cities), 100, 20)
-    print(population)
+    sigma = len(cities)
+    N = 100
+    K = 20
+    G = 2500
+    fitness_avg, fitness_best = simple_EA(cities, sigma, N, K, generations=G)
+    make_plot('EA', sigma, N, K, G, fitness_avg, fitness_best)
+    G = 1
+    fitness_avg, fitness_best = memetic(cities, sigma, N, K, generations=G)
+    make_plot('MA', sigma, N, K, G, fitness_avg, fitness_best)
