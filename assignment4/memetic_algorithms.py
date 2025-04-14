@@ -118,7 +118,7 @@ def memetic(
         N: int,
         K: int,
         p: float = 0.1,
-        m: float = 0.01,
+        m: float = 0.1,
         generations: int = 1000):
     '''
     cities: list with city coordinates
@@ -168,7 +168,7 @@ def memetic(
         population = np.array(new_population)
 
     fitness = fitness_pop(population, cities)
-    fitness_avg.append(fitness.sum / len(fitness))
+    fitness_avg.append(fitness.sum() / len(fitness))
     fitness_best.append(max(fitness))
 
     return fitness_avg, fitness_best
@@ -195,8 +195,9 @@ def two_opt(candidate: List[int], cities: List[float]) -> List[int]:
 def make_plot(algorithm: str, sigma: int, N: int, K: int, G: int, fitness_avg: List[float], fitness_best: List[float]):
     name = algorithm + '_' + str(sigma) + '_' + str(N) + '_' + str(K) + '_' + str(G) + '.png'
 
-    plt.plot(range(len(fitness_avg)), fitness_avg, label='average fitness')
-    plt.plot(range(len(fitness_best)), fitness_best, label='best fitness')
+    plt.figure()
+    plt.plot(range(len(fitness_avg)), 1/np.array(fitness_avg), label='average distance')
+    plt.plot(range(len(fitness_best)), 1/np.array(fitness_best), label='minimal distance')
     plt.legend()
     plt.xlabel('Generations')
     plt.ylabel('Distance (Euclidean)')
@@ -206,34 +207,46 @@ def make_plot(algorithm: str, sigma: int, N: int, K: int, G: int, fitness_avg: L
 if __name__ == "__main__":
     cities = np.loadtxt("./assignment4/file-tsp.txt")
     sigma = len(cities)
-    N = 100
-    K = 20
-    G = 2
+
+    N = 300
+    K = 100
+    G = 500
     start_time = time.time()
     fitness_avg, fitness_best = simple_EA(cities, sigma, N, K, generations=G)
     end_time = time.time()
-    print(end_time-start_time)
+    print(f'time: {end_time-start_time}')
+    print(f'last distance: {1/fitness_best[-1]}\n')
     make_plot('EA', sigma, N, K, G, fitness_avg, fitness_best)
+
+    N = 10
+    K = 4
     G = 1
     start_time = time.time()
     fitness_avg, fitness_best = memetic(cities, sigma, N, K)
     end_time = time.time()
-    print(end_time-start_time)
+    print(f'time: {end_time-start_time}')
+    print(f'last distance: {1/fitness_best[-1]}\n')
     make_plot('MA', sigma, N, K, G, fitness_avg, fitness_best, generations=G)
 
     cities = np.loadtxt("./assignment4/burma14.txt")[:, 1:]
     sigma = len(cities)
+
     N = 100
     K = 20
-    G = 2500
+    G = 500
     start_time = time.time()
     fitness_avg, fitness_best = simple_EA(cities, sigma, N, K, generations=G)
     end_time = time.time()
-    print(end_time-start_time)
+    print(f'time: {end_time-start_time}')
+    print(f'last distance: {1/fitness_best[-1]}\n')
     make_plot('EA', sigma, N, K, G, fitness_avg, fitness_best)
-    G = 1
+
+    N = 50
+    K = 10
+    G = 5
     start_time = time.time()
     fitness_avg, fitness_best = memetic(cities, sigma, N, K, generations=G)
     end_time = time.time()
-    print(end_time-start_time)
+    print(f'time: {end_time-start_time}')
+    print(f'last distance: {1/fitness_best[-1]}\n')
     make_plot('MA', sigma, N, K, G, fitness_avg, fitness_best)
