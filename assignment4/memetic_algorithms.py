@@ -127,12 +127,13 @@ def memetic(
     for i, candidate in enumerate(population):
         population[i] = two_opt(candidate, cities)
 
-    # determine fitness
-    fitness = fitness_pop(population, cities)
-
     for _ in range(generations):
         # select the new population
         new_population = []
+
+        # determine fitness
+        fitness = fitness_pop(population, cities)
+
         for i in range(N):
             parent1, parent2 = population[tournament(N, K, fitness)]
 
@@ -183,5 +184,5 @@ if __name__ == "__main__":
     cities = np.loadtxt("./assignment4/berlin52.txt")[:, 1:]
     population = simple_EA(cities, 52, 100, 20)
     print(population)
-    population = memetic(cities, 50, 100, 20)
+    population = memetic(cities, 52, 100, 20)
     print(population)
