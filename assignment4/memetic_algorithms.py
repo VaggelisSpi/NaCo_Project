@@ -5,7 +5,7 @@ import random
 
 
 def simple_EA(
-        cities:List[float],
+        cities: List[float],
         sigma: int,
         N: int,
         K: int,
@@ -108,11 +108,29 @@ def memetic():
     pass
 
 
-def two_opt():
-    pass
+def two_opt(candidate: List[float], cities: List[float]) -> List[float]:
+    best = candidate.copy()
+    search = True
+
+    while search:
+        search = False
+        for i in range(1, len(candidate) - 2):  # skip the first and last city
+            for j in range(i+1, len(candidate)):
+                if (j - i) > 1:
+                    new_candidate = best.copy()
+                    new_candidate[i:j] = new_candidate[i:j][::-1]
+                    if fitness(new_candidate, cities) > fitness(best, cities):
+                        best = new_candidate
+                        search = True
+
+    return best
 
 
 if __name__ == "__main__":
     cities = np.loadtxt("./assignment4/file-tsp.txt")
     population = simple_EA(cities, 50, 100, 20)
+    print(population)
+
+    cities = np.loadtxt("./assignment4/berlin52.txt")[:, 1:]
+    population = simple_EA(cities, 52, 100, 20)
     print(population)
