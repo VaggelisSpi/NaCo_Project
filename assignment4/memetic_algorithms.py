@@ -176,13 +176,13 @@ def two_opt(candidate: List[int], cities: List[float]) -> List[int]:
 
 if __name__ == "__main__":
     cities = np.loadtxt("./assignment4/file-tsp.txt")
-    population = simple_EA(cities, 50, 100, 20)
+    population = simple_EA(cities, len(cities), 100, 20)
     print(population)
-    population = memetic(cities, 50, 100, 20)
+    population = memetic(cities, len(cities), 100, 20)
     print(population)
 
-    cities = np.loadtxt("./assignment4/berlin52.txt")[:, 1:]
-    population = simple_EA(cities, 52, 100, 20)
+    cities = np.loadtxt("./assignment4/burma14.txt")[:, 1:]
+    population = simple_EA(cities, len(cities), 100, 20)
     print(population)
-    population = memetic(cities, 52, 100, 20)
+    population = memetic(cities, len(cities), 100, 20)
     print(population)
