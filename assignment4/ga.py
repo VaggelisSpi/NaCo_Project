@@ -54,7 +54,7 @@ def ga(
             break
 
         generation += 1
-        if generation > max_generations:
+        if generation >= max_generations:
             print("Max generations reached without finding the solution!")
             break
 
@@ -64,10 +64,11 @@ def ga(
                 print(f"Generation {generation}: Current bit string = {current}, Fitness = {current_fit}")
 
     # Print the final result
-    print("\nFinal result:")
-    print(f"Bit string = {current}")
-    print(f"Fitness = {current_fit}")
-    print(f"Generation = {generation}")
+    if debug:
+        print("\nFinal result:")
+        print(f"Bit string = {current}")
+        print(f"Fitness = {current_fit}")
+        print(f"Generation = {generation}")
 
     return current, fits
 
