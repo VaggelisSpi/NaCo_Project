@@ -1,7 +1,6 @@
 import numpy as np
 import random
 from typing import List
-import matplotlib.pyplot as plt
 import math
 from collections.abc import Callable
 
@@ -89,14 +88,7 @@ class EA:
                 
             self.population = new_population
             
-        plt.plot(fitness_best, label='Best Fitness')
-        plt.plot(fitness_avg, label='Avg Fitness')
-        plt.xlabel("Generation")
-        plt.ylabel("Fitness")
-        plt.title("EA Progress")
-        plt.legend()
-        plt.grid(True)
-        plt.show()
+        return (self.best_individual, self.best_fitness, fitness_avg, fitness_best)
         
     def _generate_individual(self):
         return random.sample(range(self.M), self.sigma)
@@ -146,7 +138,7 @@ class EA:
 
         # replace selection
         for old, new in zip(to_replace, replacements):
-            idx = mutated.index(old)
-            mutated[idx] = new
+            i = mutated.index(old)
+            mutated[i] = new
 
         return mutated
