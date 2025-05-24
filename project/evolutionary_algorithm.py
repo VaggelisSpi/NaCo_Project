@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import numpy as np
 import random
 from typing import List
@@ -10,7 +12,7 @@ class EA:
     '''
     def __init__(
         self,
-        data: List[float] | List[[float]],
+        data: List[float],
         N: int, # population size
         sigma: int, # individual size
         K: int, # tournament selection
@@ -37,7 +39,7 @@ class EA:
             self.N += 1
         
         self.M = len(self.data) # total data keys
-        self.population = []
+        self.population: List[float] = []
         self.best_fitness = np.inf
         self.best_individual = None
         
@@ -90,7 +92,7 @@ class EA:
             
         return (self.best_individual, self.best_fitness, fitness_avg, fitness_best)
         
-    def _generate_individual(self):
+    def _generate_individual(self) -> List[float]:
         return random.sample(range(self.M), self.sigma)
 
     def _tournament(self, fitnesses: List[float]):
