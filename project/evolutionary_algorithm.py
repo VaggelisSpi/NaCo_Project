@@ -10,7 +10,7 @@ class EA:
     '''
     def __init__(
         self,
-        data: List[float],
+        data: List[float] | List[[float]],
         N: int, # population size
         sigma: int, # individual size
         K: int, # tournament selection
