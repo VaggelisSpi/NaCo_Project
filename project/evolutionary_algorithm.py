@@ -65,7 +65,8 @@ class EA:
             fitness_avg.append(avg_fit)
             fitness_best.append(best_fit)
             
-            print(f"Gen {t+1}: Best = {best_fit}, Avg = {avg_fit}")
+            if t % 100 == 0:
+                print(f"Gen {t+1}: Best = {best_fit}, Avg = {avg_fit}")
             
             new_population = []
             i = 0

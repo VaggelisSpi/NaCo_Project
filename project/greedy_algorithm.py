@@ -43,6 +43,7 @@ class GreedyAlgorithm:
             max_deleted = max(peptide_deletion_counts.values())
             if max_deleted == 0:
                 break
+
             top_peptides = []
             for peptide, count in peptide_deletion_counts.items():
                 if count == max_deleted:
