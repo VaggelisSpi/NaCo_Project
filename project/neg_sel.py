@@ -26,7 +26,7 @@ class NegativeSelection:
         """
         for r in range(self.r_start, self.r_stop + 1):
             cmd = (
-                "java -jar negsel2.jar -alphabet "
+                "java -jar negsel2.jar -alphabet file:/"
                 + self.alphabet_path
                 + " -self "
                 + self.self_path
