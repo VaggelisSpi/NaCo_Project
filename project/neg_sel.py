@@ -24,7 +24,7 @@ class NegativeSelection:
 
         :param data_path: The path to the file with the test data
         """
-        for r in range(self.r_start, self.r_stop):
+        for r in range(self.r_start, self.r_stop + 1):
             cmd = (
                 "java -jar negsel2.jar -alphabet "
                 + self.alphabet_path
