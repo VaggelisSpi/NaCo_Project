@@ -6,15 +6,6 @@ from typing import List
 import math
 import multiprocessing
 
-
-_motifs = None
-_t = None
-
-def _init_worker(motifs, t):
-    global _motifs, _t
-    _motifs = motifs
-    _t = t
-
 def _affinity(motif: str, peptide: str) -> int:
     max_adjacent = 0
     current = 0
@@ -27,10 +18,11 @@ def _affinity(motif: str, peptide: str) -> int:
             current = 0
     return max_adjacent
 
-def _self_reactive_pairs(peptide):
+def _self_reactive_pairs(args):
+    peptide, motifs, t = args
     matched_motifs = set()
-    for motif in _motifs:
-        if _affinity(motif, peptide) >= _t:
+    for motif in motifs:
+        if _affinity(motif, peptide) >= t:
             matched_motifs.add(motif)
     return (peptide, matched_motifs)
 
@@ -98,10 +90,8 @@ class GreedyAlgorithm:
         return selected_peptides
 
     def _parallel_srp(self):
-        print('test10')
-        with multiprocessing.Pool(initializer=_init_worker, initargs=(self.motifs, self.t)) as pool:
-            results = pool.map(_self_reactive_pairs, self.peptides)
-
-        motif_peptide_map = {peptide: motifs for peptide, motifs in results}
-        return motif_peptide_map
-
+        print('test12')
+        with multiprocessing.Pool() as pool:
+            args = [(peptide, self.motifs, self.t) for peptide in self.peptides]
+            results = pool.map(_self_reactive_pairs, args)
+        return {peptide: motifs for peptide, motifs in results}
