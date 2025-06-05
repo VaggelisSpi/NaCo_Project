@@ -4,7 +4,35 @@ import numpy as np
 import random
 from typing import List
 import math
+import multiprocessing
 
+
+_motifs = None
+_t = None
+
+def _init_worker(motifs, t):
+    global _motifs, _t
+    _motifs = motifs
+    _t = t
+
+def _affinity(motif: str, peptide: str) -> int:
+    max_adjacent = 0
+    current = 0
+    for m, p in zip(motif, peptide):
+        if m == p:
+            current += 1
+            if current > max_adjacent:
+                max_adjacent = current
+        else:
+            current = 0
+    return max_adjacent
+
+def _self_reactive_pairs(peptide):
+    matched_motifs = set()
+    for motif in _motifs:
+        if _affinity(motif, peptide) >= _t:
+            matched_motifs.add(motif)
+    return (peptide, matched_motifs)
 
 class GreedyAlgorithm:
     """A greedy optimizer implementation based on the paper 'Is T Cell Negative Selection a Learning Algorithm?'
@@ -29,7 +57,7 @@ class GreedyAlgorithm:
 
     def run(self):
         remaining_motifs = set(self.motifs)
-        reactions_map = self._self_reactive_pairs()
+        reactions_map = self._parallel_srp()
         selected_peptides = []
 
         while remaining_motifs:
@@ -69,23 +97,11 @@ class GreedyAlgorithm:
 
         return selected_peptides
 
-    def _affinity(self, motif: str, peptide: str) -> int:
-        max_adjacent = 0
-        current = 0
-        for m, p in zip(motif, peptide):
-            if m == p:
-                current += 1
-                if current > max_adjacent:
-                    max_adjacent = current
-            else:
-                current = 0
-        return max_adjacent
+    def _parallel_srp(self):
+        print('test10')
+        with multiprocessing.Pool(initializer=_init_worker, initargs=(self.motifs, self.t)) as pool:
+            results = pool.map(_self_reactive_pairs, self.peptides)
 
-    def _self_reactive_pairs(self):
-        motif_peptide_map = {}
-        for peptide in self.peptides:
-            motif_peptide_map[peptide] = set()
-            for motif in self.motifs:
-                if self._affinity(motif, peptide) >= self.t:
-                    motif_peptide_map[peptide].add(motif)
+        motif_peptide_map = {peptide: motifs for peptide, motifs in results}
         return motif_peptide_map
+
