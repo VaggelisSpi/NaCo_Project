@@ -53,7 +53,7 @@ class EA:
 
         for t in range(self.T):
             # get fitness values of the populations
-            fitnesses = [self.f(self.data[individual]) for individual in self.population]
+            fitnesses = [self.f(individual) for individual in self.population]
 
             # statistics
             best_idx = np.argmin(fitnesses)
