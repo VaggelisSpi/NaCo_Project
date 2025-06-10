@@ -4,7 +4,27 @@ import numpy as np
 import random
 from typing import List
 import math
+import multiprocessing
 
+def _affinity(motif: str, peptide: str) -> int:
+    max_adjacent = 0
+    current = 0
+    for m, p in zip(motif, peptide):
+        if m == p:
+            current += 1
+            if current > max_adjacent:
+                max_adjacent = current
+        else:
+            current = 0
+    return max_adjacent
+
+def _self_reactive_pairs(args):
+    peptide, motifs, t = args
+    matched_motifs = set()
+    for motif in motifs:
+        if _affinity(motif, peptide) >= t:
+            matched_motifs.add(motif)
+    return (peptide, matched_motifs)
 
 class GreedyAlgorithm:
     """A greedy optimizer implementation based on the paper 'Is T Cell Negative Selection a Learning Algorithm?'
@@ -29,7 +49,7 @@ class GreedyAlgorithm:
 
     def run(self):
         remaining_motifs = set(self.motifs)
-        reactions_map = self._self_reactive_pairs()
+        reactions_map = self._parallel_srp()
         selected_peptides = []
 
         while remaining_motifs:
@@ -69,23 +89,9 @@ class GreedyAlgorithm:
 
         return selected_peptides
 
-    def _affinity(self, motif: str, peptide: str) -> int:
-        max_adjacent = 0
-        current = 0
-        for m, p in zip(motif, peptide):
-            if m == p:
-                current += 1
-                if current > max_adjacent:
-                    max_adjacent = current
-            else:
-                current = 0
-        return max_adjacent
-
-    def _self_reactive_pairs(self):
-        motif_peptide_map = {}
-        for peptide in self.peptides:
-            motif_peptide_map[peptide] = set()
-            for motif in self.motifs:
-                if self._affinity(motif, peptide) >= self.t:
-                    motif_peptide_map[peptide].add(motif)
-        return motif_peptide_map
+    def _parallel_srp(self):
+        print('test12')
+        with multiprocessing.Pool() as pool:
+            args = [(peptide, self.motifs, self.t) for peptide in self.peptides]
+            results = pool.map(_self_reactive_pairs, args)
+        return {peptide: motifs for peptide, motifs in results}
