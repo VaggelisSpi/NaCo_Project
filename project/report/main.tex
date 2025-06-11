@@ -37,7 +37,7 @@ peptides, such as HIV and ebola cells.
 
 \section{Methods}
 
-\subsection{Datasets}
+\subsection{Datasets} \label{datasets}
 
 \subsubsection{Random}
 
@@ -45,7 +45,7 @@ peptides, such as HIV and ebola cells.
 \subsubsection{Greedy Algorithm}
 
 
-\subsubsection{Evolutionary Algorithm}
+\subsubsection{Evolutionary Algorithm} 
 
 \paragraph{AA composition}
 
@@ -53,6 +53,21 @@ peptides, such as HIV and ebola cells.
 
 \paragraph{Exchangeability}
 
+\subsection{Negative Selection}
+In order to run the negative selection experiments we will use the jar that is provided by \url{https://johannes-textor.name/negativeselection.html}.
+The training of the algorithm will take place with the three training sets as described in section \ref{datasets}.
+All peptides have a fixed length of 6, and we will evaluate the effectiveness of the NS algorithm by experimenting 
+with a variable length of contiguous selectors, ranging between 1 and 6. 
+
+In order to asses the performance of the NS, we  will use as test sets, a subset of the self peptides, with size 1216, 
+and a number of anomalous peptides that belong to the following categories: ebola, hepatitis b... For each peptide in 
+the test datasets, the NS algorithm can return either the number of patterns in the repertoire that match it, or the 
+normalised value $log_2(1 + x)$, where $x$ is the number of matching patterns. We will use this normalised value, as the 
+number of selectors can be unwieldy to work with. Afterwards, we can classify each peptide as anomalous or self peptide, 
+if its score exceeds the value r. After classifying the data, we will estimate the receiver operating characteristic 
+curve (AUC) to quantify how well our estimated datasets can optimise the NS algorithm.
+
+% jar counts all matching selectors so we do log to get better anomaly scores
 
 \subsection{Experiment}
 
