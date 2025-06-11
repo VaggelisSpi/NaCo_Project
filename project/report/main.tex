@@ -19,6 +19,19 @@
 \maketitle
 
 \section{Introduction}
+In human bodies, the immune system is responsible for detecting pathogens and exterminating them. 
+One of the tools at its disposal, is the T cells. T cells grow in the thymus, and each one is responsible for
+identifying and attacking specific cells. However, that means that it is possible for healthy cells to be
+attacked as well. In order to mitigate this, human cells are presented to the T cells, and the T cells that attack them 
+are eliminated. This process is called Negative Selection (NS). In practice, the amount of possible cells is very large, and as a result only a sub-set of self peptides are presented
+in the T cells. 
+
+Artificial Immune Systems (AIS) are systems that draw inspiration from the human immune system, similarly to how Neural 
+Networks (NNs) are inspired by the human nervous system. In this project, we would like to explore how we can find 
+optimal subsets to train an NS algorithm for peptide selection. We will do this using 3 different methods, randomly 
+sampling a subset, using a greedy algorithm and an evolutionary algorithm to produce them. Afterwards, we will train the 
+negative selection algorithm with each one of them, and evaluate its performance against different sets of harmful 
+peptides, such as HIV and ebola cells. 
 
 
 
