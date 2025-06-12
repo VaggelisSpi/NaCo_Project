@@ -18,11 +18,12 @@ class NegativeSelection:
         self.r_start = r_start
         self.r_stop = r_stop
 
-    def run(self, data_path: str) -> None:
+    def run(self, data_path: str, result_path: str, postfix: str = "") -> None:
         """
         Run the negative selection algorithm for the data in the data path and save the results in a file
 
         :param data_path: The path to the file with the test data
+        :param result_path: The path to the directory to write the results
         """
         for r in range(self.r_start, self.r_stop + 1):
             cmd = (
@@ -36,16 +37,19 @@ class NegativeSelection:
                 + str(r)
                 + " <"
                 + data_path
-                + "> ./data/results/"
+                + "> " 
+                + result_path
                 + str(data_path.split("/")[-1][:-4])
                 + "_r"
                 + str(r)
+                + "_"
+                + postfix
                 + ".txt"
             )
             subprocess.run(cmd, capture_output=True, shell=True)
 
 
-def load_data(data_path: str, r: int, anomalous: int = 0) -> pd.DataFrame:
+def load_data(data_path: str, r: int, result_path: str, anomalous: int = 0) -> pd.DataFrame:
     """
     Load the strings and their scores in a dataframe along with the label
 
@@ -58,7 +62,7 @@ def load_data(data_path: str, r: int, anomalous: int = 0) -> pd.DataFrame:
     data = pd.DataFrame()
     data["input"] = pd.read_csv(data_path, header=None)  # input sequences
     data["score"] = pd.read_csv(
-        "./data/results/" + str(data_path.split("/")[-1][:-4]) + "_r" + str(r) + ".txt", header=None
+        result_path + str(data_path.split("/")[-1][:-4]) + "_r" + str(r) + ".txt", header=None
     ).astype(np.float32)  # anomaly score
     data["anomalous"] = anomalous
 
