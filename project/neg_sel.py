@@ -56,7 +56,7 @@ def load_data(data_path: str, r: int, anomalous: int = 0) -> pd.DataFrame:
     determined from the parameter of the same name
     """
     data = pd.DataFrame()
-    data["input"] = pd.read_csv(data_path, header=None)  # input sentence
+    data["input"] = pd.read_csv(data_path, header=None)  # input sequences
     data["score"] = pd.read_csv(
         "./data/results/" + str(data_path.split("/")[-1][:-4]) + "_r" + str(r) + ".txt", header=None
     ).astype(np.float32)  # anomaly score
