@@ -27,11 +27,16 @@ are eliminated. This process is called Negative Selection (NS). In practice, the
 in the T cells. 
 
 Artificial Immune Systems (AIS) are systems that draw inspiration from the human immune system, similarly to how Neural 
-Networks (NNs) are inspired by the human nervous system. In this project, we would like to explore how we can find 
-optimal subsets to train an NS algorithm for peptide selection. We will do this using 3 different methods, randomly 
+Networks (NNs) are inspired by the human nervous system. A big challenge in using the NS algorithm is selecting an effictive sub-set of peptides to train on.
+Selecting the optimal subset is important because it direcly impacts the algorithm's ability to differentiate between healthy and harmful peptides.
+Therefore being able to find the optimal subset to use for the NS algorithm is crucial to improve the accuracy of the NS algorithm.  
+
+In this project, we would like to explore how we can find this optimal subsets to train an NS algorithm for peptide selection. We will do this using 3 different methods, randomly 
 sampling a subset, using a greedy algorithm and an evolutionary algorithm to produce them. Afterwards, we will train the 
 negative selection algorithm with each one of them, and evaluate its performance against different sets of harmful 
 peptides, such as HIV and ebola cells. 
+
+
 
 
 
