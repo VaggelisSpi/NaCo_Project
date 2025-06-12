@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{biblatex}
+\addbibresource{references.bib}
 % \usepackage[sortcites=true,sorting=nyt,backend=biber]{biblatex}
 \usepackage{hyperref}
 \usepackage{amsmath}
@@ -19,6 +20,9 @@
 \maketitle
 
 \section{Introduction}
+
+\subsection{Background}
+
 In human bodies, the immune system is responsible for detecting pathogens and exterminating them. 
 One of the tools at its disposal, is the T cells. T cells grow in the thymus, and each one is responsible for
 identifying and attacking specific cells. However, that means that it is possible for healthy cells to be
@@ -36,18 +40,41 @@ sampling a subset, using a greedy algorithm and an evolutionary algorithm to pro
 negative selection algorithm with each one of them, and evaluate its performance against different sets of harmful 
 peptides, such as HIV and ebola cells. 
 
+\subsection{Relevance}
+
+\subsection{Problem description}
+
+\subsection{Related work}
 
 
+\cite{wortel2020t}
 
 
-\section{Methods}
+\section{Methodology}
 
 \subsection{Datasets} \label{datasets}
 
-\subsubsection{Random}
+We use various 
+The datasets we are using are 
+
+
+\subsection{Optimizers}
+
+In order to study the effectiveness of evolving a dataset through an evolutionary algorithm, we will compare 1) a random
+dataset, 2) a greedily optimized dataset, 
+
+our evolved 
+datasets (and its resulting performance metrics) to a random dataset
+
+we create a random dataset which will be our control condition.
 
 
 \subsubsection{Greedy Algorithm}
+
+The greedy algorithm optimizes ...
+
+Because the greedy algorithm has a high complexity, computing the fully optimized dataset using all human peptides and
+all possible motifs was infeasible. Therefore, this study limited the number of peptides and motifs.
 
 
 \subsubsection{Evolutionary Algorithm} 
@@ -57,6 +84,10 @@ peptides, such as HIV and ebola cells.
 \paragraph{AA frequency}
 
 \paragraph{Exchangeability}
+
+
+
+
 
 \subsection{Negative Selection}
 In order to run the negative selection experiments we will use the jar that is provided by \url{https://johannes-textor.name/negativeselection.html}.

@@ -1,0 +1,78 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{wortel2020t}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=f031a15978786b4f316346563b6ef1ee}{%
+           family={Wortel},
+           familyi={W\bibinitperiod},
+           given={Inge\bibnamedelima MN},
+           giveni={I\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=c89a2b767f6dc07240c8226c596b0f93}{%
+           family={Keşmir},
+           familyi={K\bibinitperiod},
+           given={Can},
+           giveni={C\bibinitperiod}}}%
+        {{hash=1d8ad9453689f90924010dfc5e0158bf}{%
+           family={Boer},
+           familyi={B\bibinitperiod},
+           given={Rob\bibnamedelima J},
+           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=eb74fbcf6c46677eed27ac1bc75bc75c}{%
+           family={Mandl},
+           familyi={M\bibinitperiod},
+           given={Judith\bibnamedelima N},
+           giveni={J\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=6d67e4628007198f49152bd69eab37fb}{%
+           family={Textor},
+           familyi={T\bibinitperiod},
+           given={Johannes},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MDPI}%
+      }
+      \strng{namehash}{ee765e4fba7d2b75a9de40d6b19cefdc}
+      \strng{fullhash}{34212b7e0af7c10c79eadcbe427dc227}
+      \strng{fullhashraw}{34212b7e0af7c10c79eadcbe427dc227}
+      \strng{bibnamehash}{ee765e4fba7d2b75a9de40d6b19cefdc}
+      \strng{authorbibnamehash}{ee765e4fba7d2b75a9de40d6b19cefdc}
+      \strng{authornamehash}{ee765e4fba7d2b75a9de40d6b19cefdc}
+      \strng{authorfullhash}{34212b7e0af7c10c79eadcbe427dc227}
+      \strng{authorfullhashraw}{34212b7e0af7c10c79eadcbe427dc227}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Cells}
+      \field{number}{3}
+      \field{title}{Is T cell negative selection a learning algorithm?}
+      \field{volume}{9}
+      \field{year}{2020}
+      \field{pages}{690}
+      \range{pages}{1}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
