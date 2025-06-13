@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber main"] 1749840667.9941 "main.bcf" "main.bbl" "main" 1749840727.95448 0
-  "main.bcf" 1749840727.8203 108859 f0648809517a23cbf8c70530b1b41037 "pdflatex"
+["biber main"] 1749843354.44852 "main.bcf" "main.bbl" "main" 1749843376.91105 0
+  "main.bcf" 1749843376.80353 108859 f0648809517a23cbf8c70530b1b41037 "pdflatex"
   "references.bib" 1749805488.57652 14942 f106e21a69d6e50692360c7b64384f8a ""
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1749840724.90741 "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" "main.pdf" "main" 1749840727.95527 0
-  "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" 1749840724.62429 20413 602d9381a217355bf050f25254ec3aef ""
+["pdflatex"] 1749843374.00014 "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" "main.pdf" "main" 1749843376.91144 0
+  "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" 1749843373.76351 22896 8bd1d5de9dfc0253f03e545039d76317 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -137,17 +137,18 @@
   "images/english_xhosa_ea.png" 1749810064.5109 44978 c2c0a8a6d5fd0ebdab39937e46410bc1 ""
   "images/english_xhosa_greedy.png" 1749809906.97326 43284 45ea020002584ab47f5c9cc00b490135 ""
   "images/english_xhosa_random.png" 1749809491.92891 43682 18492330fd4af8c1239a982a4d561c4a ""
+  "images/fitness_over_gens.jpeg" 1749842717.51446 62328 8726f6a759d777a1cf4f1c42fce40bd8 ""
   "images/hepb_ea.png" 1749826001.45538 42514 c50fdc14858bd2513b8974f8e5834f65 ""
   "images/hepb_greedy.png" 1749825938.34292 40784 48d70e15135602b86bd0af4f84fb4a96 ""
   "images/hepb_random.png" 1749825794.17386 39169 5a50b150d9f9b6e9daccc950ce534f5c ""
   "images/hiv_ea.png" 1749826016.03549 43185 b670c4e95c031e6a964a81f81973f644 ""
   "images/hiv_greedy.png" 1749825953.81903 39892 be98bbb957eb38343b91474fc84c873e ""
   "images/hiv_random.png" 1749825803.96593 41426 73edab9ffb03dc3f6772c7a12bff5b7d ""
-  "main.aux" 1749840727.8163 10526 c67e10a33d19f93fafaa147ab71a8878 "pdflatex"
-  "main.bbl" 1749840670.04805 4340 6cdc0c671bd042218c74e8a41407e223 "biber main"
-  "main.out" 1749840727.8203 2390 c1d2465b4ab34f4dd19d87bb83c14d05 "pdflatex"
-  "main.run.xml" 1749840727.8203 2305 52095dfad395b381e9a32937e764a41c "pdflatex"
-  "main.tex" 1749840724.62429 20413 602d9381a217355bf050f25254ec3aef ""
+  "main.aux" 1749843376.79953 10871 954120246c8549977a2e3119a9dde22a "pdflatex"
+  "main.bbl" 1749843355.93939 4340 6cdc0c671bd042218c74e8a41407e223 "biber main"
+  "main.out" 1749843376.79953 2390 c1d2465b4ab34f4dd19d87bb83c14d05 "pdflatex"
+  "main.run.xml" 1749843376.80353 2305 52095dfad395b381e9a32937e764a41c "pdflatex"
+  "main.tex" 1749843373.76351 22896 8bd1d5de9dfc0253f03e545039d76317 ""
   (generated)
   "main.aux"
   "main.bcf"
