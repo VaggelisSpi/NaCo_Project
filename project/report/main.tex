@@ -67,22 +67,50 @@ have a positive impact on optimizing training sets for classification problems.
 We hope to include and apply those findings when we are implementing our evolutionary algorithm to create an 
 optimized training set.
 
-\subsection{Problem description}
-
-\subsection{Related work}
-
-
-\cite{wortel2020t}
-
-
 \section{Methodology}
+\subsection{Datasets} \label{datasets}
+This study first tried to deal with the easier problem of discriminating two different languages, and later on we 
+consider the harder problem of distinguishing human peptides from foreign ones. Therefore, the datasets used in our 
+experiments consist of two parts: 1) languages and 2) peptides. Each consists of a training set containing all the self 
+peptides for negative selection, and test datasets containing foreign peptides and one with self peptides. In all our 
+experiments, we set the length of short strings and peptides (from now on, for the sake of brevity, we will also refer 
+to the strings in the language datasets as peptides, as they are functionally not different) to $n$ to $n=6$.
+
+For the language datasets, we first defined a common alphabet of size of 27 which includes an additional '$\_$' to 
+signify spaces in the text and the 26 letters of the English alphabet.
+All texts were preprocessed such that every character not in the alphabet was replaced with a 
+'$\$', and, as an extra pass, there could only be a single '$\$' back-to-back. After that, we generated a training 
+dataset ($n=189718$) and a test set of strings of a length of 6 based on the novel 'Moby Dick' by Herman Melville.
+Then, test sets of foreign peptides were generated based on the first few chapters of The Ghospel of Matthew from the 
+Bible for the following languages: Hiligaynon, Latin, Middle-English, Plautdietsch, Tagalog and Xhosa. 
+The test sets were all $2000$ peptides long.
+
+For the experiments with peptides, we used the various peptide datasets that were used by \textcite{wortel2020t} in 
+their experiments found in their GitHub (\url{https://github.com/ingewortel/negative-selection-2020}). From this, we 
+used the human peptides as the training ($n=262000$) and test sets of self peptides ($n=1216$), and peptides of the
+following diseases were defined as foreign peptides and used as test sets of various sizes: HIV, hepatitis B, and ebola. 
+These peptide datasets used an alphabet of amino acids of length 20 (ACDEFGHIKLMNPQRSTVWY) as opposed to 28 from the languages part.
 
 \subsection{Optimizers} \label{optimizers}
 
-In order to create more effective training dataset of self peptides for negative selection, we implemented two optimizers: 
-1) a greedy algorithm and 2) the evolutionary algorithm. These strategies try to select subsets that maximize the information of the training data.
+In order to create more effective training dataset of self peptides for negative selection, we implemented two 
+optimizers: 1) a greedy algorithm and 2) the evolutionary algorithm. These strategies try to select subsets that 
+maximize the information of the training data.
 
+\subsubsection{Greedy Algorithm}
 
+The greedy algorithm iteratively builds a data set by greedily selecting a) the peptide that matches with the greatest 
+umber of motifs and b) removing its matching motifs from the motifs set until there are no motifs left. A peptide 
+matches with a motif when the number of consecutive AAs at their respective positions is equal to or greater than 
+threshold $t$. For both parts, we used $t=3$ and generated all possible motif combination with length $n$ and the 
+current alphabet, resulting in $27^6$ motifs for the language part and $20^6$ motifs for the peptide part.
+
+Because the greedy algorithm has a high complexity (in every iteration, each peptide needs to be compared to all 
+current motifs), computing the fully optimized dataset using all human peptides and all possible motifs was infeasible.
+Therefore, this study randomly sampled only $1\%$ of all motifs to reduce the runtime of the experiments, and $4\%$ of 
+the self peptides. The greedily optimized dataset for each part also determined the size of the other generated datasets 
+(3574 for languages, and 6125 for peptides). We did this because we wanted the comparisons between the other 
+(random and evolved) resulting datasets to be consistent.
 
 \subsubsection{Greedy Algorithm}
 
