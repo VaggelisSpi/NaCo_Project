@@ -19,6 +19,47 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global/global}
+    \entry{wilde2020evolutionary}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=bfd064fb080cfda98197c5055d0f1d6d}{%
+           family={Wilde},
+           familyi={W\bibinitperiod},
+           given={Henry},
+           giveni={H\bibinitperiod}}}%
+        {{hash=283a403c6ad7ec862a8eccd1aa1b9135}{%
+           family={Knight},
+           familyi={K\bibinitperiod},
+           given={Vincent},
+           giveni={V\bibinitperiod}}}%
+        {{hash=38d4d02c5fde31517f927012049154e7}{%
+           family={Gillard},
+           familyi={G\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{7d9c242a02d3f5285743c517ff846221}
+      \strng{fullhash}{7d9c242a02d3f5285743c517ff846221}
+      \strng{fullhashraw}{7d9c242a02d3f5285743c517ff846221}
+      \strng{bibnamehash}{7d9c242a02d3f5285743c517ff846221}
+      \strng{authorbibnamehash}{7d9c242a02d3f5285743c517ff846221}
+      \strng{authornamehash}{7d9c242a02d3f5285743c517ff846221}
+      \strng{authorfullhash}{7d9c242a02d3f5285743c517ff846221}
+      \strng{authorfullhashraw}{7d9c242a02d3f5285743c517ff846221}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Applied Intelligence}
+      \field{number}{4}
+      \field{title}{Evolutionary dataset optimisation: learning algorithm quality through evolution}
+      \field{volume}{50}
+      \field{year}{2020}
+      \field{pages}{1172\bibrangedash 1191}
+      \range{pages}{20}
+    \endentry
     \entry{wortel2020t}{article}{}{}
       \name{author}{5}{}{%
         {{hash=f031a15978786b4f316346563b6ef1ee}{%
