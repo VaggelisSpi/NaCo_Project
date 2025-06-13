@@ -12,7 +12,7 @@
 \bibliography{references}
 
 \title{Evolving Training Sets for Peptide Discrimination via Evolutionary Algorithms}
-\author{Loek Gerrits (s1032343), Evangelos Spithas (s1125593), Bart van Nimwegen}
+\author{Loek Gerrits, Evangelos Spithas, Bart van Nimwegen}
 \date{\today}
 
 \begin{document} 
@@ -44,7 +44,7 @@ could otherwise cause harm . Since using all the self-peptides is not really pos
 as the number of self-peptides is too big it would be too expensive to process all of them.
 
 Therefore being able to find the optimal subset to use for the NS algorithm is crucial to improve the accuracy of the 
-NS algorithm.  
+NS algorithm. The optimality of a dataset is dependent on some selected statisical properties. For instance, peptides that use rare amino acid (AA) values are more likely to remove rare T cells and remove unnecessary duplicates in the training set. Another property is the frequency of an AA, which evaluates how common an amino acid is in each position. Another important property is peptide exchangability, which measures how many other peptides remove the same T cells. Optimal training sets minimize how often these occur by excluding peptides with a high exchangability. All of these statisical properties add to how rare the peptides are, an improved rarity means an overal optimal set.
 
 \subsection{Problem description}
 
@@ -65,70 +65,74 @@ algorithm.\\
 In the paper by Wilde et al. \cite{wilde2020evolutionary} they propose a solution on how evolutionary algorithms can 
 have a positive impact on optimizing training sets for classification problems.
 We hope to include and apply those findings when we are implementing our evolutionary algorithm to create an 
-optimized training set.
+optimized training set. We used their findings to inform us about the components in the fitness function for this paper's evolutionary algorithm.
 
 \section{Methodology}
 \subsection{Datasets} \label{datasets}
-This study first tried to deal with the easier problem of discriminating two different languages, and later on we 
-consider the harder problem of distinguishing human peptides from foreign ones. Therefore, the datasets used in our 
-experiments consist of two parts: 1) languages and 2) peptides. Each consists of a training set containing all the self 
-peptides for negative selection, and test datasets containing foreign peptides and one with self peptides. In all our 
-experiments, we set the length of short strings and peptides (from now on, for the sake of brevity, we will also refer 
-to the strings in the language datasets as peptides, as they are functionally not different) to $n$ to $n=6$.
 
-For the language datasets, we first defined a common alphabet of size of 27 which includes an additional '$\_$' to 
-signify spaces in the text and the 26 letters of the English alphabet.
-All texts were preprocessed such that every character not in the alphabet was replaced with a 
-'$\$', and, as an extra pass, there could only be a single '$\$' back-to-back. After that, we generated a training 
-dataset ($n=189718$) and a test set of strings of a length of 6 based on the novel 'Moby Dick' by Herman Melville.
-Then, test sets of foreign peptides were generated based on the first few chapters of The Ghospel of Matthew from the 
-Bible for the following languages: Hiligaynon, Latin, Middle-English, Plautdietsch, Tagalog and Xhosa. 
-The test sets were all $2000$ peptides long.
+This study first tried to deal with the easier problem of discriminating two different languages, and later on we consider the harder problem of distinguishing human peptides from foreign ones. 
+Therefore, the datasets used in our experiments consist of two parts: 1) languages and 2) peptides.
+Each consists of a training set containing all the self peptides for negative selection, and test datasets containing foreign peptides and one with self peptides.
+In all our experiments, we set the length of short strings and peptides (from now on, for the sake of brevity, we will also refer to the strings in the language datasets as peptides, as they are functionally not different) to $n$ to $n=6$.
 
-For the experiments with peptides, we used the various peptide datasets that were used by \textcite{wortel2020t} in 
-their experiments found in their GitHub (\url{https://github.com/ingewortel/negative-selection-2020}). From this, we 
-used the human peptides as the training ($n=262000$) and test sets of self peptides ($n=1216$), and peptides of the
-following diseases were defined as foreign peptides and used as test sets of various sizes: HIV, hepatitis B, and ebola. 
+For the language datasets, we first defined a common alphabet of size of 27 which includes an additional '$\_$' to signify spaces in the text and the 26 letters of the English alphabet.
+All texts were preprocessed such that every character not in the alphabet was replaced with a '$\_$', and, as an extra pass, there could only be a single '$\_$' back-to-back.
+After that, we generated a training dataset ($n=189718$) and a test set of strings of a length of 6 based on the novel 'Moby Dick' by Herman Melville.
+Then, test sets of foreign peptides were generated based on the first few chapters of The Ghospel of Matthew from the Bible for the following languages: Hiligaynon, Latin, Middle-English, 
+Plautdietsch, Tagalog and Xhosa. The test sets were all $2000$ peptides long.
+
+For the experiments with peptides, we used the various peptide datasets that were used by \textcite{wortel2020t} in their experiments found in their GitHub (\url{https://github.com/ingewortel/negative-selection-2020}).
+From this, we used the human peptides as the training ($n=262000$) and test sets of self peptides ($n=1216$), and peptides of the following diseases were defined as foreign peptides and used as test sets of various sizes: HIV, hepatitis B, and ebola. 
 These peptide datasets used an alphabet of amino acids of length 20 (ACDEFGHIKLMNPQRSTVWY) as opposed to 28 from the languages part.
+
+
 
 \subsection{Optimizers} \label{optimizers}
 
-In order to create more effective training dataset of self peptides for negative selection, we implemented two 
-optimizers: 1) a greedy algorithm and 2) the evolutionary algorithm. These strategies try to select subsets that 
-maximize the information of the training data.
+In order to create more effective training dataset of self peptides for negative selection, we implemented two optimizers: 
+1) a greedy algorithm and 2) the evolutionary algorithm. These strategies try to select subsets that maximize the information of the training data.
+
 
 \subsubsection{Greedy Algorithm}
 
-The greedy algorithm iteratively builds a data set by greedily selecting a) the peptide that matches with the greatest 
-umber of motifs and b) removing its matching motifs from the motifs set until there are no motifs left. A peptide 
-matches with a motif when the number of consecutive AAs at their respective positions is equal to or greater than 
-threshold $t$. For both parts, we used $t=3$ and generated all possible motif combination with length $n$ and the 
-current alphabet, resulting in $27^6$ motifs for the language part and $20^6$ motifs for the peptide part.
+The greedy algorithm deterministically and iteratively builds a data set by greedily selecting a) the peptide that matches with the greatest number of motifs and b) removing its matching motifs from the motifs set until there are no motifs left.
+A peptide matches with a motif when the number of consecutive AAs at their respective positions is equal to or greater than threshold $t$.
+For both parts, we used $t=3$ and generated all possible motif combination with length $n$ and the current alphabet, resulting in $27^6$ motifs for the language part and $20^6$ motifs for the peptide part.
 
-Because the greedy algorithm has a high complexity (in every iteration, each peptide needs to be compared to all 
-current motifs), computing the fully optimized dataset using all human peptides and all possible motifs was infeasible.
-Therefore, this study randomly sampled only $1\%$ of all motifs to reduce the runtime of the experiments, and $4\%$ of 
-the self peptides. The greedily optimized dataset for each part also determined the size of the other generated datasets 
-(3574 for languages, and 6125 for peptides). We did this because we wanted the comparisons between the other 
-(random and evolved) resulting datasets to be consistent.
-
-\subsubsection{Greedy Algorithm}
-
-The greedy algorithm optimizes ...
-
-Because the greedy algorithm has a high complexity, computing the fully optimized dataset using all human peptides and
-all possible motifs was infeasible. Therefore, this study limited the number of peptides and motifs.
-
+Because the greedy algorithm has a high complexity (in every iteration, each peptide needs to be compared to all current motifs), computing the fully optimized dataset using all human peptides and all possible motifs was infeasible.
+Therefore, this study randomly sampled only $1\%$ of all motifs to reduce the runtime of the experiments, and $4\%$ of the self peptides.
+The greedily optimized dataset for each part also determined the size $\sigma$ of the other generated datasets ($\sigma=3574$ for languages, and $\sigma=6125$ for peptides).
+We did this because a) the greedy algorithm's output's size is uncontrollable while the others are not, and b) making the size of the datasets consistent would mean one less variable to consider during comparisons.
 
 \subsubsection{Evolutionary Algorithm} 
 
-\paragraph{AA composition}
+The evolutionary algorithm is designed to optimize datasets in a more flexible and optimized manner via probabilistic exploration than the greedy algorithm.
+The resulting population of peptides is our evolutionarily optimized dataset.
+The EA first initializes $N=100$ populations where each set has a subset of peptides with a size of $\sigma$. 
+The algorithm then evolves the populations over $T=500$ generations based on a fitness function through crossover $p=0.1$, mutation $\mu=0.01$ and tournament selection $K=2$.
 
+The goal of the EA is to find the population of peptides with the best statistical properties by minimizing fitness score.
+This study uses three features for both language and peptide discrimination tasks in the EA's fitness function:
 
+\begin{itemize}
+    \item Postional AA Frequency $f_{pep}$:
+        $f_{pep}$ is defined as how common the AAs in a peptide are at a specific position. A high score for this metric suggests that it is more redundant.
 
-\paragraph{AA frequency}
+    \item AA Rarity $f_{freq}$:
+        This is a metric that scores how rare the AAs are of the peptide independent of their positions.
+    
+    \item Exchangeability $(s_{\text{exch}})$:
+        We defined exchangeability as the number of peptided in the subset that have an affinity above threshold $t$ with another peptide.
+        A high exchangeability means it is more redundant comparatively.
 
-\paragraph{Exchangeability}
+\end{itemize}
+
+The fitness function used for both language and peptide discrimination we defined as follows:
+\[f = a_1 \cdot \mathrm{avg}(f_{\text{pep}}) + a_2 \cdot \mathrm{avg}(f_{\text{freq}}) + a_3 \cdot \mathrm{avg}(s_{\text{exch}})\]
+Each component has a scalar value $\alpha$ that we will explore later on in the paper to check what feature(s) or combination of features with different $\alpha$ values are most informative.
+As mentioned before, the rationale behind this fitness score is that optimal peptide datasets should include AAs that are rare while excluding as many unnecessary as possible.
+This is because NSA benefits from diverse and informative training sets in order to obtain optimal performance \cite{wortel2020t}.
+
 
 
 \subsection{Negative Selection}
@@ -146,7 +150,7 @@ as anomalous or self peptide, if its score exceeds the value r.
 \subsection{Experimental design}
 We set the following experimental setup to test our methods. We first generated three subsets of the english dataset 
 from the text of Mobby Dick, with the methods described in section \ref{optimizers}, which we will use as the self set of 
-the negative selection algorithm. The datasets have a size 3574. This was the size of the dataset returned by the greedy 
+the negative selection algorithm. The datasets have a size 3574 as mentioned in the Datasets section. This was the size of the dataset returned by the greedy 
 algorithm and was then used as the target size of the datasets of the other methods.
 
 As test sets, we used an english dataset with 2000 english tokens, which were obtained by random excerpts from The Bible (\url{https://www.wordproject.org/bibles/index.htm}).
@@ -155,10 +159,35 @@ Plautdietsch, Tagalog and Xhosa. The NS algorithm was run for each language, and
 estimated the receiver operating characteristic curve (AUC) to quantify how well our estimated datasets can optimise 
 the NS algorithm.
 
-Lastly, we repeated the same experiments but with actual peptide data. For that we used a subset of human peptides with 
+After running the greedy algorithm and using that to obtain the greedily optimized set, as well as the random peptide set,
+we try to learn more about the components we defined in the fitness function. 
+It could be that the components do not work, or some or more informative than others, or that some other combination of components in the fitness function evolves better datasets.
+We explore 7 different combinations of these components turning one or two off and checking the resulting performance.
+The combination of scalars $\alpha$ in the fitness function that we explored are as follows:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{file} & \textbf{$\alpha_1$} & \textbf{$\alpha_2$} & \textbf{$\alpha_3$} \\
+        \hline
+        run 1 & 1 & 1 & 1 \\ 
+        run 2 & 1 & 1 & 0 \\
+        run 3 & 1 & 0 & 1  \\
+        run 4 & 0 & 1 & 1  \\
+        run 5 & 1 & 0 & 0  \\ 
+        run 6 & 0 & 1 & 0  \\
+        run 7 & 0 & 0 & 1  \\
+        \hline
+    \end{tabular}
+    \caption{The different runs this study ran for different combination of $\alpha$ values in the fitness function of the evolutionary algorithm.}
+    \label{tab:files}
+\end{table}
+
+
+Lastly, we repeated the first experiments on actual peptide data, but now we only use the best scalars that we found in the previous experiment for the evolutionary algorithm to check how it performs when dealing harder problems.
+For that we used a subset of human peptides with 
 size 1216, as well peptides of the following diseases: HIV, hepatitis B, and ebola, as obtained by \url{https://github.com/ingewortel/negative-selection-2020}
-
-
 
 \section{Results}
 \subsection{Language Discrimination}
@@ -175,19 +204,23 @@ datasets, the results are poor. This happens because Middle English is very simi
 distinctions for the NSA to pick up. The more different the language gets from English, the better results we have, 
 with Xhosa, having the best AUC values.
 
-Lastly, we shall evaluate the performance between each different self dataset we have created. Overall, all the datasets 
-achieve similar results, without big differences. This means that they all carry meaningful information to 
-discriminate the languages. If we look closely, we will see that when using the dataset generated from the evolutionary 
+We evaluate the performance between each different self dataset we have created. Overall, all the datasets 
+achieve similar results when performing negative selection, without big differences. If we look closely, we will see that when using the dataset generated from the evolutionary 
 algorithm, we achieve the best performance in Hiligaynon, Latin, Tagalog and Xhosa. The random self dataset achieves the 
 best results for Plautdietsch, while the greedy self dataset performs the best with Middle English. As we can see, we 
 do not achieve significant gains from the different datasets, however the evolutionary datasets seems promising as it is 
 always the best or second best.
 
+We also explored the different combination of component scalars in the fitness function. 
+However, there are no significant performance differences found between any of the combinations.
+The results are similar to the results as before, in that they perform as good or bad as any other basically.
+Therefore, it seemingly does not matter which combination of features we pick for the foreign peptide detection task.
+
 For the evolutionary algorithm, we can also look at how the fitness progresses over the generations. In Figure 
 \ref{fig:ea_fit_over_gens}, we plot the average and the best fitness for each generation. As we can see, fitness 
 converges very fast in the beginning and then it seems to stabilize. This might signal that we could have used more 
 individual populations than we did, in order to achieve even more improved results, but this was not feasible due to 
-time constraints, since the runtime scales linearly with the size of the population. 
+computational and time constraints, since the runtime scales linearly with the size of the population. 
 
 \begin{figure}[ht]
     \includegraphics[width=0.75\textwidth]{images/fitness_over_gens.jpeg}
@@ -202,7 +235,7 @@ between self peptides and Ebola, Hepatitis-B and HIV peptides. As we can observe
 the differently created self datasets. This indicates that the discrimination of foreign and self peptides is a rather 
 difficult problem, most probably because of the similarities between peptides, unlike the more complex structure of 
 languages. It is worth noting however, that we still observe a small bump in the AUC scores for $r$ values of $3$ and 
-$4$, like before.
+$4$, like before. Again, the evolutionary algorithm does not seem to perform significantly different compared to the others.
 
 \section{Discussion}
 In the Results section we observed that the performance for the peptide detection was unfortunately very poor. This stems
@@ -210,12 +243,22 @@ from the fact that the foreign peptides have patterns too similar to the human p
 languages problem we saw that the NS algorithm performed relatively well, except Middle English, which are also very 
 similar to modern English. 
 
+
+% TODO
+However, most importantly, we did not see significatn differences between any of the datasets, be it random, greedily optimized, or through evolution.
+We would have at least expected to see an improvement for the greedily optimized dataset, but that is not the case here.
+This means that the results presented by \textcite{wortel2020t} where they did see improvements could not be replicated.
+We hypothesize that this happened because we severely limited the peptide subsets, the training sets and also the motifs.
+Since there were no significant performance differences, we were not able to determine what component or combination of components are most informative in the fitness function for the evolutionary algorithm.
+Nor were we able to determine if the evolutionary algorithm is better than a random dataset.
+This is a significant limitation that future researchers can hope to solve with more time and compute.
+
 In the future we can explore improvements in the greedy and evolutionary algorithms we used to generate the optimised 
 self peptide datasets. With regard to the evolutionary algorithm, we can experiment with different weights for the
 features we used to define the fitness function. As we were not able to carry out extensive experiments for them, it is 
 possible that there is a better solution that was not explored as part of this work. Moreover, we did not explore any
 of the parameters of the evolutionary algorithm, where, for different values we could potentially achieve better
-results. Also, the size og the population is currently hardcoded. In the future we could use an implementation with an
+results. Also, the size of the population is currently hardcoded. In the future we could use an implementation with an
 adaptive population size that can lead to potentially more optimal solutions.
 
 Furthermore, for the greedy algorithm, we can benefit from increased computational resources, since we were 
@@ -227,7 +270,7 @@ In this work, we examined how we can improve the effectiveness of natural select
 datasets with three different ways, randomly, with a greedy and with an evolutionary algorithm. We performed two sets of
 experiments, one for language discrimination and one for foreign peptide detection. As we saw, creating the training
 dataset with the greedy and evolutionary algorithms can improve the NS algorithms, however, due to the limitations we
-faced, we could not achieve significant improvements.
+faced, we could not achieve significant improvements. We were not able to replicate a previous study's results on improved performance due to optimized datasets, either.
 
 The optimal values of $r$ were proven to be $3$ and $4$, while we saw very good results for the discrimination of Xhosa,
 followed by the other languages that are not close to English. The problem of discriminating English from Middle English
@@ -238,6 +281,24 @@ There can be many potential gains from NS algorithms and the improvements that w
 datasets. However, due to the limitations we faced in this work we could not achieve the desired results. Hopefully, 
 future work in this field can be proven more fruitful and achieve better results.
 
+\section{Contributions}
+
+\begin{itemize}
+    \item Bart van Nimwegen:
+        Introduction, ran a couple of experiments
+
+    \item Loek Gerrits:
+        Greedy algorithm implementation, evolutionary algorithm implementation, dataset creations, Methods (Datasets and Optimizers), some sections in Results and Discussion, ran a couple of experiments
+    
+    \item Evangelos Spithas:
+        Methods (negative selection, experimental design), Results, Discussion, Conclusion, ran most experiments
+
+\end{itemize}
+
+
+\section{Github repository}
+
+\url{https://github.com/VaggelisSpi/NaCo_Project}
 
 \printbibliography
 
