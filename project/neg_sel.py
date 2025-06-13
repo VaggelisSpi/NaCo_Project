@@ -49,7 +49,7 @@ class NegativeSelection:
             subprocess.run(cmd, capture_output=True, shell=True)
 
 
-def load_data(data_path: str, r: int, result_path: str, anomalous: int = 0) -> pd.DataFrame:
+def load_data(data_path: str, r: int, result_path: str, anomalous: int = 0, postfix: str = "") -> pd.DataFrame:
     """
     Load the strings and their scores in a dataframe along with the label
 
@@ -62,7 +62,7 @@ def load_data(data_path: str, r: int, result_path: str, anomalous: int = 0) -> p
     data = pd.DataFrame()
     data["input"] = pd.read_csv(data_path, header=None)  # input sequences
     data["score"] = pd.read_csv(
-        result_path + str(data_path.split("/")[-1][:-4]) + "_r" + str(r) + ".txt", header=None
+        result_path + str(data_path.split("/")[-1][:-4]) + "_r" + str(r) + "_" + postfix + ".txt", header=None
     ).astype(np.float32)  # anomaly score
     data["anomalous"] = anomalous
 
