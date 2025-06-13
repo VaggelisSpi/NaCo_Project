@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber main"] 0 "main.bcf" "main.bbl" "main" 1749826765.36478 -1
-  "main.bcf" 1749826765.23298 108651 f330116339f579b18505bfbc809e85b5 "pdflatex"
+["biber main"] 0 "main.bcf" "main.bbl" "main" 1749828950.90832 -1
+  "main.bcf" 1749828950.81703 108651 f330116339f579b18505bfbc809e85b5 "pdflatex"
   "references.bib" 1749805488.57652 14942 f106e21a69d6e50692360c7b64384f8a ""
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1749826761.67547 "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" "main.pdf" "main" 1749826765.36597 0
-  "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" 1749826761.01295 14604 7bdff122b6d85b4f01252b79f5d7b43d ""
+["pdflatex"] 1749828948.19843 "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" "main.pdf" "main" 1749828950.9087 0
+  "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" 1749828947.92501 15461 f989a33b850238044aab4d9af213efaf ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -139,11 +139,11 @@
   "images/hiv_ea.png" 1749826016.03549 43185 b670c4e95c031e6a964a81f81973f644 ""
   "images/hiv_greedy.png" 1749825953.81903 39892 be98bbb957eb38343b91474fc84c873e ""
   "images/hiv_random.png" 1749825803.96593 41426 73edab9ffb03dc3f6772c7a12bff5b7d ""
-  "main.aux" 1749826765.22898 10695 7f29599b199cfba1521305f0be5a48d4 "pdflatex"
+  "main.aux" 1749828950.81303 10695 510f490dc3faf8cc5186e8421f0780b9 "pdflatex"
   "main.bbl" 1749805488.57252 2690 a4ca24fd3aece8ec6640fd82c708081e "biber main"
-  "main.out" 1749826765.23298 2061 53917d79a88cd2f6ffd59947cf1125aa "pdflatex"
-  "main.run.xml" 1749826765.23698 2305 52095dfad395b381e9a32937e764a41c "pdflatex"
-  "main.tex" 1749826761.01295 14604 7bdff122b6d85b4f01252b79f5d7b43d ""
+  "main.out" 1749828950.81303 2061 53917d79a88cd2f6ffd59947cf1125aa "pdflatex"
+  "main.run.xml" 1749828950.81703 2305 52095dfad395b381e9a32937e764a41c "pdflatex"
+  "main.tex" 1749828947.92501 15461 f989a33b850238044aab4d9af213efaf ""
   (generated)
   "main.aux"
   "main.bcf"

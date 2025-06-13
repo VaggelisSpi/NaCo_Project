@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.6.9)  13 JUN 2025 16:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.6.9)  13 JUN 2025 17:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -662,47 +662,47 @@ LaTeX Warning: Float too large for page by 92.59427pt on input line 233.
 <images/ebola_random.png, id=117, 875.1897pt x 224.7597pt>
 File: images/ebola_random.png Graphic file (type png)
 <use images/ebola_random.png>
-Package pdftex.def Info: images/ebola_random.png  used on input line 260.
+Package pdftex.def Info: images/ebola_random.png  used on input line 261.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 <images/hepb_random.png, id=118, 875.1897pt x 224.7597pt>
 File: images/hepb_random.png Graphic file (type png)
 <use images/hepb_random.png>
-Package pdftex.def Info: images/hepb_random.png  used on input line 266.
+Package pdftex.def Info: images/hepb_random.png  used on input line 267.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 <images/hiv_random.png, id=119, 875.1897pt x 224.7597pt>
 File: images/hiv_random.png Graphic file (type png)
 <use images/hiv_random.png>
-Package pdftex.def Info: images/hiv_random.png  used on input line 272.
+Package pdftex.def Info: images/hiv_random.png  used on input line 273.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 <images/ebola_greedy.png, id=120, 875.1897pt x 224.7597pt>
 File: images/ebola_greedy.png Graphic file (type png)
 <use images/ebola_greedy.png>
-Package pdftex.def Info: images/ebola_greedy.png  used on input line 283.
+Package pdftex.def Info: images/ebola_greedy.png  used on input line 284.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 <images/hepb_greedy.png, id=121, 875.1897pt x 224.7597pt>
 File: images/hepb_greedy.png Graphic file (type png)
 <use images/hepb_greedy.png>
-Package pdftex.def Info: images/hepb_greedy.png  used on input line 289.
+Package pdftex.def Info: images/hepb_greedy.png  used on input line 290.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 <images/hiv_greedy.png, id=122, 875.1897pt x 224.7597pt>
 File: images/hiv_greedy.png Graphic file (type png)
 <use images/hiv_greedy.png>
-Package pdftex.def Info: images/hiv_greedy.png  used on input line 295.
+Package pdftex.def Info: images/hiv_greedy.png  used on input line 296.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 <images/ebola_ea.png, id=123, 875.1897pt x 224.7597pt>
 File: images/ebola_ea.png Graphic file (type png)
 <use images/ebola_ea.png>
-Package pdftex.def Info: images/ebola_ea.png  used on input line 306.
+Package pdftex.def Info: images/ebola_ea.png  used on input line 307.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 <images/hepb_ea.png, id=124, 875.1897pt x 224.7597pt>
 File: images/hepb_ea.png Graphic file (type png)
 <use images/hepb_ea.png>
-Package pdftex.def Info: images/hepb_ea.png  used on input line 312.
+Package pdftex.def Info: images/hepb_ea.png  used on input line 313.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 <images/hiv_ea.png, id=125, 875.1897pt x 224.7597pt>
 File: images/hiv_ea.png Graphic file (type png)
 <use images/hiv_ea.png>
-Package pdftex.def Info: images/hiv_ea.png  used on input line 318.
+Package pdftex.def Info: images/hiv_ea.png  used on input line 319.
 (pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 
 
@@ -740,7 +740,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  63i,8n,67p,771b,1166s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on main.pdf (10 pages, 989551 bytes).
+Output written on main.pdf (10 pages, 990240 bytes).
 PDF statistics:
  251 PDF objects out of 1000 (max. 8388607)
  165 compressed objects within 2 object streams
