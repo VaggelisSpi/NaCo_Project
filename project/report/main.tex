@@ -36,7 +36,7 @@ Selecting the optimal subset is important because it direcly impacts the algorit
 Therefore being able to find the optimal subset to use for the NS algorithm is crucial to improve the accuracy of the NS algorithm.  
 
 In this project, we would like to explore how we can find this optimal subsets to train an NS algorithm for peptide selection. We will do this using 3 different methods, randomly 
-sampling a subset, using a greedy algorithm and an evolutionary algorithm to produce them. Afterwards, we will train the 
+sampling a subset, using a greedy algorithm and an Evolutionary Algorithm (EA) to produce them. Afterwards, we will train the 
 negative selection algorithm with each one of them, and evaluate its performance against different sets of harmful 
 peptides, such as HIV and ebola cells. 
 
@@ -52,21 +52,11 @@ peptides, such as HIV and ebola cells.
 
 \section{Methodology}
 
-\subsection{Datasets} \label{datasets}
+\subsection{Optimizers} \label{optimizers}
 
-We use various 
-The datasets we are using are 
+In order to create more effective training dataset of self peptides for negative selection, we implemented two optimizers: 
+1) a greedy algorithm and 2) the evolutionary algorithm. These strategies try to select subsets that maximize the information of the training data.
 
-
-\subsection{Optimizers}
-
-In order to study the effectiveness of evolving a dataset through an evolutionary algorithm, we will compare 1) a random
-dataset, 2) a greedily optimized dataset, 
-
-our evolved 
-datasets (and its resulting performance metrics) to a random dataset
-
-we create a random dataset which will be our control condition.
 
 
 \subsubsection{Greedy Algorithm}
@@ -81,6 +71,8 @@ all possible motifs was infeasible. Therefore, this study limited the number of 
 
 \paragraph{AA composition}
 
+
+
 \paragraph{AA frequency}
 
 \paragraph{Exchangeability}
@@ -89,29 +81,77 @@ all possible motifs was infeasible. Therefore, this study limited the number of 
 
 
 
+
+
 \subsection{Negative Selection}
 In order to run the negative selection experiments we will use the jar that is provided by \url{https://johannes-textor.name/negativeselection.html}.
 The training of the algorithm will take place with the three training sets as described in section \ref{datasets}.
-All peptides have a fixed length of 6, and we will evaluate the effectiveness of the NS algorithm by experimenting 
-with a variable length of contiguous selectors, ranging between 1 and 6. 
+All elements of each dataset have a fixed length of 6, and we will evaluate the effectiveness of the NS algorithm by 
+experimenting  with a variable length of contiguous selectors, ranging between 1 and 6. 
 
-In order to asses the performance of the NS, we  will use as test sets, a subset of the self peptides, with size 1216, 
-and a number of anomalous peptides that belong to the following categories: ebola, hepatitis b... For each peptide in 
-the test datasets, the NS algorithm can return either the number of patterns in the repertoire that match it, or the 
-normalised value $log_2(1 + x)$, where $x$ is the number of matching patterns. We will use this normalised value, as the 
-number of selectors can be unwieldy to work with. Afterwards, we can classify each peptide as anomalous or self peptide, 
-if its score exceeds the value r. After classifying the data, we will estimate the receiver operating characteristic 
-curve (AUC) to quantify how well our estimated datasets can optimise the NS algorithm.
-
+For each peptide in the test datasets, the NS algorithm can return either the number of patterns in the repertoire that 
+match it, or the normalised value $log_2(1 + x)$, where $x$ is the number of matching patterns. We will use this 
+normalised value here, as the number of selectors can be unwieldy to work with. Afterwards, we can classify each peptide 
+as anomalous or self peptide, if its score exceeds the value r.
 % jar counts all matching selectors so we do log to get better anomaly scores
 
-\subsection{Experiment}
+\subsection{Experimental design}
+We set the following experimental setup to test our methods. We first generated three subsets of the english dataset 
+from the text of Mobby Dick, with the methods described in section \ref{optimizers}, which we will use as the self set of 
+the negative selection algorithm. The datasets have a size 3574. This was the size of the dataset returned by the greedy 
+algorithm and was then used as the target size of the datasets of the other methods.
 
+As test sets, we used an english dataset with 2000 english tokens, which were obtained by random excerpts from The Bible (\url{https://www.wordproject.org/bibles/index.htm}).
+We also repeated the same method to obtain test datasets in the following languages: hiligaynon, latin, middle english, 
+plautdietsch, tagalog and xhosa. The NS algorithm was run for each language, and after classifying the data, we 
+estimated the receiver operating characteristic curve (AUC) to quantify how well our estimated datasets can optimise 
+the NS algorithm.
 
-\subsection{Analysis}
+Lastly, we repeated the same experiments but with actual peptide data. For that we used a subset of human peptides with 
+size 126, as well peptides of the following diseases: HIV, hepatitis B, and ebola, as obtained by \url{https://github.com/ingewortel/negative-selection-2020}
+
 
 
 \section{Results}
+\subsection{Language Discrimination}
+\begin{figure}[ht]
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_hiligayon_random.png}
+        \label{fig:eng_hil_rnd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_latin_random.png}
+        \label{fig:eng_lat_rnd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_middle_neglish_greedy.png}
+        \label{fig:eng_mid_eng_rnd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_platudietsch_random.png}
+        \label{fig:eng_mid_pla_rnd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_tagalog_random.png}
+        \label{fig:eng_mid_tag_rnd}
+    \end{subfigure}
+        \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_xhosa_random.png}
+        \label{fig:eng_xho_rnd}
+    \end{subfigure}\caption{ROC curves for language Discrimination between English and each other language, when using the random dataset for the self set}
+\end{figure}
+\subsection{Foreign Peptide Detection}
 
 
 
