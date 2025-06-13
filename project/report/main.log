@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.6.9)  13 JUN 2025 16:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.6.9)  13 JUN 2025 16:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -659,6 +659,51 @@ Package pdftex.def Info: images/english_xhosa_ea.png  used on input line 227.
 
 LaTeX Warning: Float too large for page by 92.59427pt on input line 233.
 
+<images/ebola_random.png, id=117, 875.1897pt x 224.7597pt>
+File: images/ebola_random.png Graphic file (type png)
+<use images/ebola_random.png>
+Package pdftex.def Info: images/ebola_random.png  used on input line 260.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
+<images/hepb_random.png, id=118, 875.1897pt x 224.7597pt>
+File: images/hepb_random.png Graphic file (type png)
+<use images/hepb_random.png>
+Package pdftex.def Info: images/hepb_random.png  used on input line 266.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
+<images/hiv_random.png, id=119, 875.1897pt x 224.7597pt>
+File: images/hiv_random.png Graphic file (type png)
+<use images/hiv_random.png>
+Package pdftex.def Info: images/hiv_random.png  used on input line 272.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
+<images/ebola_greedy.png, id=120, 875.1897pt x 224.7597pt>
+File: images/ebola_greedy.png Graphic file (type png)
+<use images/ebola_greedy.png>
+Package pdftex.def Info: images/ebola_greedy.png  used on input line 283.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
+<images/hepb_greedy.png, id=121, 875.1897pt x 224.7597pt>
+File: images/hepb_greedy.png Graphic file (type png)
+<use images/hepb_greedy.png>
+Package pdftex.def Info: images/hepb_greedy.png  used on input line 289.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
+<images/hiv_greedy.png, id=122, 875.1897pt x 224.7597pt>
+File: images/hiv_greedy.png Graphic file (type png)
+<use images/hiv_greedy.png>
+Package pdftex.def Info: images/hiv_greedy.png  used on input line 295.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
+<images/ebola_ea.png, id=123, 875.1897pt x 224.7597pt>
+File: images/ebola_ea.png Graphic file (type png)
+<use images/ebola_ea.png>
+Package pdftex.def Info: images/ebola_ea.png  used on input line 306.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
+<images/hepb_ea.png, id=124, 875.1897pt x 224.7597pt>
+File: images/hepb_ea.png Graphic file (type png)
+<use images/hepb_ea.png>
+Package pdftex.def Info: images/hepb_ea.png  used on input line 312.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
+<images/hiv_ea.png, id=125, 875.1897pt x 224.7597pt>
+File: images/hiv_ea.png Graphic file (type png)
+<use images/hiv_ea.png>
+Package pdftex.def Info: images/hiv_ea.png  used on input line 318.
+(pdftex.def)             Requested size: 345.0pt x 88.59904pt.
 
 
 [3]
@@ -669,7 +714,13 @@ LaTeX Warning: Float too large for page by 92.59427pt on input line 233.
 
 [6 <./images/english_hiligayon_greedy.png> <./images/english_latin_greedy.png> <./images/english_middle_neglish_greedy.png> <./images/english_platudietsch_greedy.png> <./images/english_tagalog_greedy.png> <./images/english_xhosa_greedy.png>]
 
-[7 <./images/english_hiligayon_ea.png> <./images/english_latin_ea.png> <./images/english_middle_neglish_ea.png> <./images/english_platudietsch_ea.png> <./images/english_tagalog_ea.png> <./images/english_xhosa_ea.png>] (./main.aux)
+[7 <./images/english_hiligayon_ea.png> <./images/english_latin_ea.png> <./images/english_middle_neglish_ea.png> <./images/english_platudietsch_ea.png> <./images/english_tagalog_ea.png> <./images/english_xhosa_ea.png>]
+
+[8 <./images/ebola_random.png> <./images/hepb_random.png> <./images/hiv_random.png>]
+
+[9 <./images/ebola_greedy.png> <./images/hepb_greedy.png> <./images/hiv_greedy.png>]
+
+[10 <./images/ebola_ea.png> <./images/hepb_ea.png> <./images/hiv_ea.png>] (./main.aux)
  ***********
 LaTeX2e <2025-06-01>
 L3 programming layer <2025-05-26>
@@ -681,18 +732,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 18609 strings out of 467892
- 328513 string characters out of 5434150
- 1155292 words of memory out of 5000000
- 46958 multiletter control sequences out of 15000+600000
+ 18699 strings out of 467892
+ 330638 string characters out of 5434150
+ 1159919 words of memory out of 5000000
+ 47042 multiletter control sequences out of 15000+600000
  635202 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  63i,8n,67p,771b,1166s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on main.pdf (7 pages, 721897 bytes).
+Output written on main.pdf (10 pages, 989551 bytes).
 PDF statistics:
- 212 PDF objects out of 1000 (max. 8388607)
- 147 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
- 219 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 251 PDF objects out of 1000 (max. 8388607)
+ 165 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 264 words of extra memory for PDF output out of 10000 (max. 10000000)
 

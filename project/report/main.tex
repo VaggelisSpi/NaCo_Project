@@ -254,8 +254,82 @@ do not achieve significant gains from the different datasets, however the evolut
 always the best or second best.
 
 \subsection{Foreign Peptide Detection}
-Next we will have a look at the results for foreign peptide detection. Here will again evaluate three different self 
-datasets against HIV, Ebola and Hepatitis-B peptides. 
+\begin{figure}[ht]
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/ebola_random.png}
+        \label{fig:ebola_rnd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/hepb_random.png}
+        \label{fig:hepb_rnd}
+    \end{subfigure}
+        \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/hiv_random.png}
+        \label{fig:hiv_rnd}
+    \end{subfigure}
+
+    \caption{ROC curves for peptide detection between self and foreign, when using the random dataset for the self set}
+    \label{fig:pept_rnd}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/ebola_greedy.png}
+        \label{fig:ebola_grd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/hepb_greedy.png}
+        \label{fig:hepb_grd}
+    \end{subfigure}
+        \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/hiv_greedy.png}
+        \label{fig:hiv_grd}
+    \end{subfigure}
+
+    \caption{ROC curves for peptide detection between self and foreign, when using the greedy dataset for the self set}
+    \label{fig:pept_grd}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/ebola_ea.png}
+        \label{fig:ebola_ea}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/hepb_ea.png}
+        \label{fig:hepb_ea}
+    \end{subfigure}
+        \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/hiv_ea.png}
+        \label{fig:hiv_ea}
+    \end{subfigure}
+
+    \caption{ROC curves for peptide detection between self and foreign, when using the evolutionary algorithm dataset for the self set}
+    \label{fig:pept_ea}
+\end{figure}
+
+Next we will have a look at the results for foreign peptide detection. If figures \ref{fig:pept_rnd}, \ref{fig:pept_grd}, 
+\ref{fig:pept_ea},  we see the ROCs and AUC scores of the NS algorithm, for different r values for discrimination 
+between self peptides and HIV, Ebola and Hepatitis-B peptides. As we can observe, the results are rather poor for all 
+the differently created self datasets. This indicates that the discrimination of foreign and self peptides is a rather 
+difficult one, most probably because of the similarities between peptides, unlike the more complex structure of languages.
+It is worth noting however, that we still observe a small bump in the AUC scores for $r$ values of $3$ and $4$, like 
+before.
 
 \section{Discussion}
 In the Results section we observed that the performance for the peptide detection was unfortunately very poor. 
