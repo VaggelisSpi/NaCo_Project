@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber main"] 0 "main.bcf" "main.bbl" "main" 1749814939.30683 -1
-  "main.bcf" 1749814939.20492 108651 f330116339f579b18505bfbc809e85b5 "pdflatex"
+["biber main"] 0 "main.bcf" "main.bbl" "main" 1749822906.11733 -1
+  "main.bcf" 1749822906.01898 108651 f330116339f579b18505bfbc809e85b5 "pdflatex"
   "references.bib" 1749805488.57652 14942 f106e21a69d6e50692360c7b64384f8a ""
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1749814937.76315 "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" "main.pdf" "main" 1749814939.30718 0
-  "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" 1749814935.30888 6992 71ad0676dece1006c0143cc9b5864f84 ""
+["pdflatex"] 1749822903.24557 "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" "main.pdf" "main" 1749822906.11821 0
+  "/home/vaggelis_spithas/Documents/ru/naco/projects/NaCo_Project/project/report/main.tex" 1749822902.89097 11805 33fd48b33a48f878ec6c2ef0bc40a03d ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -112,17 +112,29 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1749487739 5523539 cbe340ff87ac4cfddcdc6361a84e52ac ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1749487900 3598241 effcff660219977584d9536a35b99dfb ""
   "/usr/local/texlive/2025/texmf.cnf" 1749487735.07161 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
+  "images/english_hiligayon_ea.png" 1749809983.01405 45988 b85e0b739f553344df28b99d4b6301d7 ""
+  "images/english_hiligayon_greedy.png" 1749809726.04337 45229 6f2fab7d8ab8386c07af3fc7a3358f1d ""
   "images/english_hiligayon_random.png" 1749809389.97984 45009 70e6ca5929e6aca3b6057cd6808405a6 ""
+  "images/english_latin_ea.png" 1749810003.53426 45273 b4d6f7e477406319c447b1dbcf1836cc ""
+  "images/english_latin_greedy.png" 1749809743.84755 44418 61be3288f6f1c9097268029a6c4afc29 ""
   "images/english_latin_random.png" 1749809427.02823 43823 9c1b7fc9168dcc1be767446c3284f89d ""
+  "images/english_middle_neglish_ea.png" 1749810016.8864 46842 ebada0213c40e081ead54865446480e1 ""
   "images/english_middle_neglish_greedy.png" 1749809784.17197 46213 a64251bf505135f7aea31380c3d4f0ee ""
+  "images/english_middle_neglish_random.png" 1749809444.60441 45502 83c2682939f5fa55ca28488ef3075486 ""
+  "images/english_platudietsch_ea.png" 1749810031.32255 45660 abfbe7d4f6b8cfe11139166c6869bd6b ""
+  "images/english_platudietsch_greedy.png" 1749809875.04092 45864 523022d7bf136631150008e23e964205 ""
   "images/english_platudietsch_random.png" 1749809464.88463 43809 da9c51f81602d75fa9d50e89e042c4e6 ""
+  "images/english_tagalog_ea.png" 1749810044.97469 45659 c5f7c01acc6b8b024d5059a146402387 ""
+  "images/english_tagalog_greedy.png" 1749809892.1851 46097 54a6a21421523c739862cfb026c02075 ""
   "images/english_tagalog_random.png" 1749810112.14339 43977 0bd9a5101c14fb809993e90566ef4595 ""
+  "images/english_xhosa_ea.png" 1749810064.5109 44978 c2c0a8a6d5fd0ebdab39937e46410bc1 ""
+  "images/english_xhosa_greedy.png" 1749809906.97326 43284 45ea020002584ab47f5c9cc00b490135 ""
   "images/english_xhosa_random.png" 1749809491.92891 43682 18492330fd4af8c1239a982a4d561c4a ""
-  "main.aux" 1749814939.20492 4160 b21c81684448b8c346476a4aa9e820ff "pdflatex"
+  "main.aux" 1749822906.01098 7730 178bdfd914ba76834f54a93daf3bd88a "pdflatex"
   "main.bbl" 1749805488.57252 2690 a4ca24fd3aece8ec6640fd82c708081e "biber main"
-  "main.out" 1749814939.20492 2061 53917d79a88cd2f6ffd59947cf1125aa "pdflatex"
-  "main.run.xml" 1749814939.20892 2305 52095dfad395b381e9a32937e764a41c "pdflatex"
-  "main.tex" 1749814935.30888 6992 71ad0676dece1006c0143cc9b5864f84 ""
+  "main.out" 1749822906.01498 2061 53917d79a88cd2f6ffd59947cf1125aa "pdflatex"
+  "main.run.xml" 1749822906.01898 2305 52095dfad395b381e9a32937e764a41c "pdflatex"
+  "main.tex" 1749822902.89097 11805 33fd48b33a48f878ec6c2ef0bc40a03d ""
   (generated)
   "main.aux"
   "main.bcf"

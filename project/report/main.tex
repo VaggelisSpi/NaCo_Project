@@ -78,14 +78,9 @@ all possible motifs was infeasible. Therefore, this study limited the number of 
 \paragraph{Exchangeability}
 
 
-
-
-
-
-
 \subsection{Negative Selection}
 In order to run the negative selection experiments we will use the jar that is provided by \url{https://johannes-textor.name/negativeselection.html}.
-The training of the algorithm will take place with the three training sets as described in section \ref{datasets}.
+The training of the algorithm will take place with the three training sets as described in section \ref{optimizers}.
 All elements of each dataset have a fixed length of 6, and we will evaluate the effectiveness of the NS algorithm by 
 experimenting  with a variable length of contiguous selectors, ranging between 1 and 6. 
 
@@ -102,8 +97,8 @@ the negative selection algorithm. The datasets have a size 3574. This was the si
 algorithm and was then used as the target size of the datasets of the other methods.
 
 As test sets, we used an english dataset with 2000 english tokens, which were obtained by random excerpts from The Bible (\url{https://www.wordproject.org/bibles/index.htm}).
-We also repeated the same method to obtain test datasets in the following languages: hiligaynon, latin, middle english, 
-plautdietsch, tagalog and xhosa. The NS algorithm was run for each language, and after classifying the data, we 
+We also repeated the same method to obtain test datasets in the following languages: Hiligaynon, Latin, Middle English, 
+Plautdietsch, Tagalog and Xhosa. The NS algorithm was run for each language, and after classifying the data, we 
 estimated the receiver operating characteristic curve (AUC) to quantify how well our estimated datasets can optimise 
 the NS algorithm.
 
@@ -129,7 +124,7 @@ size 126, as well peptides of the following diseases: HIV, hepatitis B, and ebol
     \\
     \begin{subfigure}[t]{\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{images/english_middle_neglish_greedy.png}
+        \includegraphics[width=\linewidth]{images/english_middle_neglish_random.png}
         \label{fig:eng_mid_eng_rnd}
     \end{subfigure}
     \\
@@ -149,9 +144,119 @@ size 126, as well peptides of the following diseases: HIV, hepatitis B, and ebol
         \centering
         \includegraphics[width=\linewidth]{images/english_xhosa_random.png}
         \label{fig:eng_xho_rnd}
-    \end{subfigure}\caption{ROC curves for language Discrimination between English and each other language, when using the random dataset for the self set}
+    \end{subfigure}
+    
+    \caption{ROC curves for language Discrimination between English and each other language, when using the random dataset for the self set}
+    \label{fig:langs_random}
 \end{figure}
+
+\begin{figure}[ht]
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_hiligayon_greedy.png}
+        \label{fig:eng_hil_grd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_latin_greedy.png}
+        \label{fig:eng_lat_grd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_middle_neglish_greedy.png}
+        \label{fig:eng_mid_eng_grd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_platudietsch_greedy.png}
+        \label{fig:eng_mid_pla_grd}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_tagalog_greedy.png}
+        \label{fig:eng_mid_tag_grd}
+    \end{subfigure}
+        \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_xhosa_greedy.png}
+        \label{fig:eng_xho_grd}
+    \end{subfigure}
+    
+    \caption{ROC curves for language Discrimination between English and each other language, when using the greedy dataset for the self set}
+    \label{fig:langs_greedy}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_hiligayon_ea.png}
+        \label{fig:eng_hil_ea}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_latin_ea.png}
+        \label{fig:eng_lat_ea}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_middle_neglish_ea.png}
+        \label{fig:eng_mid_eng_ea}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_platudietsch_ea.png}
+        \label{fig:eng_mid_pla_ea}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_tagalog_ea.png}
+        \label{fig:eng_mid_tag_ea}
+    \end{subfigure}
+        \\
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/english_xhosa_ea.png}
+        \label{fig:eng_xho_ea}
+    \end{subfigure}
+    
+    \caption{ROC curves for language Discrimination between English and each other language, when using the evolutionary algorithm dataset for the self set}
+    \label{fig:langs_ea}
+\end{figure}
+
+
+In figures \ref{fig:langs_random}, \ref{fig:langs_greedy}, \ref{fig:langs_ea}, we see the ROCs and AUC scores of the NS 
+algorithm, for different r values for discrimination between english and each other language. First of all, we can 
+observe that for $r=1$, the algorithm performs very poorly. That is to be expected, as for that value we look for 
+contiguous patterns of length $1$, which are very small to carry any important information. As the value of r increases, 
+so does the AUC, until it reaches $r=4$, as it then starts to decrease again, very steeply from $5$ to $6$, which 
+potentially shows that we have a lot of false positives. The best results are achieved for either $r=3$ or $r=4$.
+
+If we now compare the performance for each language, we can observe that for Middle English, for all the different self 
+datasets, the results are poor. This happens because Middle English is very similar to modern English, without enough 
+distinctions for the NSA to pick up. The more different the language gets from English, the better results we have, 
+with Xhosa, having the best AUC values.
+
+Lastly, we shall evaluate the performance between each different self dataset we have created. Overall, all the datasets 
+achieve similar results, without big differences. This means that they all carry meaningful information to 
+discriminate the languages. If we look closely, we will see that when using the dataset generated from the evolutionary 
+algorithm, we achieve the best performance in Hiligaynon, Latin, Tagalog and Xhosa. The random self dataset achieves the 
+best results for Plautdietsch, while the greedy self dataset performs the best with Middle English. As we can see, we 
+do not achieve significant gains from the different datasets, however the evolutionary datasets seems promising as it is 
+always the best or second best.
+
+
 \subsection{Foreign Peptide Detection}
+Next we will have a look at the results for foreign peptide detection. Here will again evaluate three different self 
+datasets against HIV, Ebola and Hepatitis-B peptides. 
 
 
 
