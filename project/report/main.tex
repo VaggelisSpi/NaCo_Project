@@ -133,7 +133,7 @@ all possible motifs was infeasible. Therefore, this study limited the number of 
 
 \subsection{Negative Selection}
 In order to run the negative selection experiments we will use the jar that is provided by \url{https://johannes-textor.name/negativeselection.html}.
-The training of the algorithm will take place with the three training sets as described in section \ref{optimizers}.
+The training of the algorithm will take place with the three training sets as described in section \ref{datasets}.
 All elements of each dataset have a fixed length of 6, and we will evaluate the effectiveness of the NS algorithm by 
 experimenting  with a variable length of contiguous selectors, ranging between 1 and 6. 
 
@@ -202,11 +202,29 @@ similar to modern English.
 
 In the future we can explore improvements in the greedy and evolutionary algorithms we used to generate the optimised 
 self peptide datasets. With regard to the evolutionary algorithm, we can experiment with different weights for the
-features we used to define the fitness function. Potential future work can entail exploring more languages to have a 
-more diverse set of data, as well as pondering on more advanced problems, such as distinction between human and LLM
-generated text.
+features we used to define the fitness function. As we were not able to carry out extensive experiments for them, it 
+possible that there is a better solution that was not explored as prt of this work. Furthermore, for the greedy 
+algorithm, we can benefit from increased computational resources, since we were forced to only used small subsets of 
+out full datasets.
+
+Lastly, potential future work can entail exploring more languages to have a more diverse set of data, as well as pondering 
+on more advanced problems, such as distinction between human and LLM generated text.
 
 \section{Conclusion}
+In this work, we examined how we can improve the effectiveness of natural selection algorithms, by sampling the training
+datasets with three different ways, randomly, with a greedy and with an evolutionary algorithm. We performed two sets of
+experiments, one for language discrimination and one for foreign peptide detection. As we saw, creating the training
+dataset with the greedy and evolutionary algorithms can improve the NS algorithms, however, due to the limitations we
+faced, we could not achieve significant improvements.
+
+The optimal values of $r$ were proven to be $3$ and $4$, while we saw very good results for the discrimination of Xhosa,
+followed by the other languages that are not close to English. The problem of discriminating English from Middle English
+was proven particularly difficult, same with the detection of foreign peptides, as the structure of all these datasets
+are very similar.
+
+There can be many potential gains from NS algorithms and the improvements that we can offer with optimized training
+datasets. However, due to the limitations we faced in this work we could not achieve the desired results. Hopefully, 
+future work in this field can be proven more fruitful and achieve better results.
 
 
 \printbibliography
