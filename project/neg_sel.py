@@ -24,6 +24,7 @@ class NegativeSelection:
 
         :param data_path: The path to the file with the test data
         :param result_path: The path to the directory to write the results
+        :param postfix: A postfix to add to the file name
         """
         for r in range(self.r_start, self.r_stop + 1):
             cmd = (
