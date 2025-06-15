@@ -20,11 +20,12 @@ class NegativeSelection:
 
     def run(self, data_path: str, result_path: str, postfix: str = "") -> None:
         """
-        Run the negative selection algorithm for the data in the data path and save the results in a file
+        Run the negative selection algorithm for the data in the data path, for r values between r_start and r_stop and 
+        save the results in a file under results_path
 
         :param data_path: The path to the file with the test data
         :param result_path: The path to the directory to write the results
-        :param postfix: A postfix to add to the file name
+        :param postfix: A postfix to add to the result file name
         """
         for r in range(self.r_start, self.r_stop + 1):
             cmd = (
@@ -57,7 +58,7 @@ def load_data(data_path: str, r: int, result_path: str, anomalous: int = 0, post
     There are two files, one that the data_path parameter points to that contains the strings, and the one under the
     results directory with the scores for the data in data_path. For each different r value we trained the negative
     selection algorithm, there will be a different score file.
-    Finally the dataframe will contain a column called anomalous, that will indicate the class of the data. This is
+    The resulting dataframe will contain a column called anomalous, that will indicate the class of the data. This is
     determined from the parameter of the same name
     """
     data = pd.DataFrame()
