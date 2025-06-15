@@ -20,7 +20,7 @@ class NegativeSelection:
 
     def run(self, data_path: str, result_path: str, postfix: str = "") -> None:
         """
-        Run the negative selection algorithm for the data in the data path, for r values between r_start and r_stop and 
+        Run the negative selection algorithm for the data in the data path, for r values between r_start and r_stop and
         save the results in a file under results_path
 
         :param data_path: The path to the file with the test data
@@ -39,7 +39,7 @@ class NegativeSelection:
                 + str(r)
                 + " <"
                 + data_path
-                + "> " 
+                + "> "
                 + result_path
                 + str(data_path.split("/")[-1][:-4])
                 + "_r"

@@ -6,6 +6,7 @@ from typing import List
 import math
 import multiprocessing
 
+
 def _affinity(motif: str, peptide: str) -> int:
     max_adjacent = 0
     current = 0
@@ -18,6 +19,7 @@ def _affinity(motif: str, peptide: str) -> int:
             current = 0
     return max_adjacent
 
+
 def _self_reactive_pairs(args):
     peptide, motifs, t = args
     matched_motifs = set()
@@ -25,6 +27,7 @@ def _self_reactive_pairs(args):
         if _affinity(motif, peptide) >= t:
             matched_motifs.add(motif)
     return (peptide, matched_motifs)
+
 
 class GreedyAlgorithm:
     """A greedy optimizer implementation based on the paper 'Is T Cell Negative Selection a Learning Algorithm?'
@@ -90,7 +93,7 @@ class GreedyAlgorithm:
         return selected_peptides
 
     def _parallel_srp(self):
-        print('test12')
+        print("test12")
         with multiprocessing.Pool() as pool:
             args = [(peptide, self.motifs, self.t) for peptide in self.peptides]
             results = pool.map(_self_reactive_pairs, args)

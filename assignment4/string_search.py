@@ -1,6 +1,7 @@
 import random
 from typing import List, Callable, Tuple
 
+
 class GeneticAlgorithm:
     def __init__(
         self,
@@ -11,7 +12,7 @@ class GeneticAlgorithm:
         mu: float = 0.05,
         tournament_size: int = 1,
         max_generations: int = 100,
-        generations_to_analyse: int = 10
+        generations_to_analyse: int = 10,
     ) -> None:
         self.alphabet = alphabet
         self.target = target
@@ -32,14 +33,13 @@ class GeneticAlgorithm:
 
     def get_avg_fitness(self) -> List[float]:
         return self.avg_fitness
-    
+
     def get_hamming_distances(self) -> List[float]:
         return self.hamming_distances
 
     @staticmethod
     def hamming_distance(string1, string2):
         return sum(char1 != char2 for char1, char2 in zip(string1, string2))
-
 
     def analyse_diversity(self) -> None:
         """
@@ -56,7 +56,7 @@ class GeneticAlgorithm:
 
         distances = []
         for i in range(len(sample)):
-            for j in range(i+1, len(sample)):
+            for j in range(i + 1, len(sample)):
                 distances.append(self.hamming_distance(sample[i], sample[j]))
 
         if not distances:
@@ -68,7 +68,7 @@ class GeneticAlgorithm:
         # Initialize population
         for _ in range(self.population_size):
             individual = [random.choice(self.alphabet) for _ in range(self.string_length)]
-            self.population.append(individual)    
+            self.population.append(individual)
 
         for generation in range(self.max_generations):
             # List to store new generation
@@ -87,7 +87,7 @@ class GeneticAlgorithm:
                 parent2 = max(tournament2, key=lambda x: self.fitness(x))
 
                 # Random crossover point
-                crossover_point = random.randint(1, len(parent1)-1)
+                crossover_point = random.randint(1, len(parent1) - 1)
                 child1 = parent1[:crossover_point] + parent2[crossover_point:]
                 child2 = parent2[:crossover_point] + parent1[crossover_point:]
 
@@ -117,7 +117,7 @@ class GeneticAlgorithm:
             self.avg_fitness.append(avg_fit)
 
             # Check if target is reached
-            if any(''.join(ind) == self.target for ind in self.population):
+            if any("".join(ind) == self.target for ind in self.population):
                 print(f"Target reached in {generation + 1} generations!")
                 break
 
@@ -127,18 +127,65 @@ class GeneticAlgorithm:
 
             if generation % self.generations_to_analyse == 0:
                 self.analyse_diversity()
-        
+
         self.analyse_diversity()
         return self.population, generation
 
+
 if __name__ == "__main__":
     english_letters = [
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
-        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
-        'u', 'v', 'w', 'x', 'y', 'z', 
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
-        'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
-        'U', 'V', 'W', 'X', 'Y', 'Z'
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
     ]
     # res, fits, generation = string_genetic_algorithm(english_letters, "abcdefghijklmno", 15, 200, 0.06, 2)
 
